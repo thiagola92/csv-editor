@@ -12,7 +12,12 @@ config_version=5
 
 config/name="CSV Editor"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+run/low_processor_mode=true
 config/icon="res://icon.svg"
+
+[display]
+
+window/subwindows/embed_subwindows=false
 
 [file_customization]
 

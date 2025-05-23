@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://0oqst5okk3tk"]
+[gd_scene load_steps=4 format=3 uid="uid://0oqst5okk3tk"]
 
 [ext_resource type="Script" uid="uid://b1570n61q2l16" path="res://components/table/row_cells/row_cells.gd" id="1_w3mli"]
+[ext_resource type="PackedScene" uid="uid://bv1t0ng7bnulq" path="res://components/table/row_header/row_header.tscn" id="2_cp126"]
+[ext_resource type="PackedScene" uid="uid://sh6ey856183" path="res://components/table/row_separator/row_separator.tscn" id="3_04jpx"]
 
 [node name="RowCells" type="VBoxContainer"]
 anchors_preset = 15
@@ -9,3 +11,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_w3mli")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RowHeader" parent="Row" instance=ExtResource("2_cp126")]
+layout_mode = 2
+
+[node name="Cells" type="HBoxContainer" parent="Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RowSeparator" parent="." node_paths=PackedStringArray("row") instance=ExtResource("3_04jpx")]
+layout_mode = 2
+mouse_default_cursor_shape = 9
+row = NodePath("../Row")

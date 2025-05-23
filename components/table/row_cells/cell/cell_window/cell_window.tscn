@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://q67pd2qcfsh2"]
+
+[ext_resource type="Script" uid="uid://dda325pd61kmi" path="res://components/table/row_cells/cell/cell_window/cell_window.gd" id="1_kibe3"]
+
+[node name="CellWindow" type="Window"]
+initial_position = 5
+size = Vector2i(500, 500)
+script = ExtResource("1_kibe3")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="text_changed" from="TextEdit" to="." method="_on_text_edit_text_changed"]

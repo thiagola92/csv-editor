@@ -2,5 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bde1us8ilog54" path="res://components/table/row_header/row_header.gd" id="1_20rcx"]
 
-[node name="RowHeader" type="Label"]
+[node name="RowHeader" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_20rcx")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
