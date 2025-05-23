@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk2g2d2b07n18"]
+
+[ext_resource type="Script" uid="uid://cexj0leb6lile" path="res://components/table/row_columns/column/column_separator/column_separator.gd" id="1_oo3jy"]
+
+[node name="ColumnSeparator" type="VSeparator"]
+script = ExtResource("1_oo3jy")

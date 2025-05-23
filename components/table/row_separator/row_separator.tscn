@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sh6ey856183"]
+
+[ext_resource type="Script" uid="uid://bjas46t77vhi7" path="res://components/table/row_separator/row_separator.gd" id="1_qk1c4"]
+
+[node name="RowSeparator" type="HSeparator"]
+script = ExtResource("1_qk1c4")

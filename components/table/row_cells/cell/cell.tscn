@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cewco4f4r603g"]
+
+[ext_resource type="Script" uid="uid://c8pgcxs5kul7o" path="res://components/table/row_cells/cell/cell.gd" id="1_ox40q"]
+
+[node name="Cell" type="TextEdit"]
+script = ExtResource("1_ox40q")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cau3nsfvocf7p"]
+
+[ext_resource type="Script" uid="uid://bgjfclxqn2c6b" path="res://components/table/row_columns/column/column_header/column_header.gd" id="1_ip8xt"]
+
+[node name="ColumnHeader" type="Label"]
+script = ExtResource("1_ip8xt")

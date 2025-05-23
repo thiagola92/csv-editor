@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv1t0ng7bnulq"]
+
+[ext_resource type="Script" uid="uid://bde1us8ilog54" path="res://components/table/row_header/row_header.gd" id="1_20rcx"]
+
+[node name="RowHeader" type="Label"]
+script = ExtResource("1_20rcx")
