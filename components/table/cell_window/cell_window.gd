@@ -27,6 +27,7 @@ func _on_tree_exiting() -> void:
 	
 	cell.cell_window = null
 	cell.editable = true
+	cell.grab_focus()
 
 
 func _on_text_edit_text_changed() -> void:

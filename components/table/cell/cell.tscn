@@ -1,10 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://cewco4f4r603g"]
+[gd_scene load_steps=3 format=3 uid="uid://cewco4f4r603g"]
 
 [ext_resource type="Script" uid="uid://c8pgcxs5kul7o" path="res://components/table/cell/cell.gd" id="1_ox40q"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fc4l8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.687215, 0.687215, 0.687215, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="Cell" type="TextEdit"]
-offset_right = 8.0
-offset_bottom = 8.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_fc4l8")
 editable = false
 script = ExtResource("1_ox40q")
 
