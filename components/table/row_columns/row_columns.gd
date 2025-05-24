@@ -37,6 +37,14 @@ func get_column_width(index: int) -> float:
 	return (_columns.get_child(index) as ColumnHeader).size.x
 
 
+func get_empty_header_width() -> float:
+	return _empty_header.custom_minimum_size.x
+
+
+func set_empty_header_width(x: float) -> void:
+	_empty_header.custom_minimum_size.x = x
+
+
 func _on_empty_header_add_column_requested() -> void:
 	var column_header: ColumnHeader = ColumnHeaderScene.instantiate()
 	

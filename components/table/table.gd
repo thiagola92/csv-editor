@@ -28,6 +28,9 @@ func _on_row_columns_add_row_requested() -> void:
 	_rows.add_child(row_cells)
 	values.resize(_row_columns.get_columns_count())
 	row_cells.set_text(str(row_cells.get_index()))
+	row_cells.row_header_width_changed.connect(
+		_on_row_cells_row_header_width_changed.bind(row_cells)
+	)
 	
 	for i in _row_columns.get_columns_count():
 		row_cells.add_cell(i)
@@ -47,3 +50,16 @@ func _on_row_columns_column_header_width_changed(index: int) -> void:
 	
 	for rc: RowCells in _rows.get_children():
 		rc.set_cell_width(index, width)
+
+
+func _on_row_columns_empty_header_width_changed() -> void:
+	var width: float = _row_columns.get_empty_header_width()
+	
+	for rc: RowCells in _rows.get_children():
+		rc.set_row_header_width(width)
+
+
+func _on_row_cells_row_header_width_changed(row_cells: RowCells) -> void:
+	_row_columns.set_empty_header_width(
+		row_cells.get_row_header_width()
+	)

@@ -30,3 +30,4 @@ row = NodePath("../Row")
 
 [connection signal="add_above_requested" from="Row/RowHeader" to="." method="_on_row_header_add_above_requested"]
 [connection signal="add_below_requested" from="Row/RowHeader" to="." method="_on_row_header_add_below_requested"]
+[connection signal="minimum_size_changed" from="Row/RowHeader" to="." method="_on_row_header_minimum_size_changed"]
