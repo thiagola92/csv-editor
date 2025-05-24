@@ -3,12 +3,12 @@ class_name RowSeparator
 extends HSeparator
 
 
-## Set to the HBoxContainer that you want the minimum_size.y changed.
-@export var row: HBoxContainer
+## Set to the Control that you want the minimum_size.y changed.
+@export var row: Control
 
-var initial_y_position: float
+var _initial_y_position: float
 
-var initial_y_size: float
+var _initial_y_size: float
 
 
 func _ready() -> void:
@@ -25,10 +25,10 @@ func _process(_delta: float) -> void:
 func _follow_mouse() -> void:
 	set_process(true)
 	
-	initial_y_position = get_global_mouse_position().y
+	_initial_y_position = get_global_mouse_position().y
 	
 	if row:
-		initial_y_size = row.size.y
+		_initial_y_size = row.size.y
 
 
 func _reset_row() -> void:
@@ -37,10 +37,10 @@ func _reset_row() -> void:
 
 
 func _resize_row() -> void:
-	var distance: float = get_global_mouse_position().y - initial_y_position
+	var distance: float = get_global_mouse_position().y - _initial_y_position
 	
 	if row:
-		row.custom_minimum_size.y = initial_y_size + distance
+		row.custom_minimum_size.y = _initial_y_size + distance
 
 
 func _on_gui_input(event: InputEvent) -> void:

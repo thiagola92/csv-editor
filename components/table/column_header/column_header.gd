@@ -1,5 +1,5 @@
-## Show the row index and provide a menu for the user interact with the row.
-class_name RowHeader
+## Show the column index and provide a menu for the user interact with the column.
+class_name ColumnHeader
 extends HBoxContainer
 
 

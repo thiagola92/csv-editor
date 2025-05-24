@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cau3nsfvocf7p"]
+
+[ext_resource type="Script" uid="uid://bgjfclxqn2c6b" path="res://components/table/column_header/column_header.gd" id="1_ip8xt"]
+[ext_resource type="PackedScene" uid="uid://bk2g2d2b07n18" path="res://components/table/column_separator/column_separator.tscn" id="2_qe5fa"]
+
+[node name="ColumnHeader" type="HBoxContainer"]
+offset_right = 72.0
+offset_bottom = 32.0
+script = ExtResource("1_ip8xt")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColumnSeparator" parent="." node_paths=PackedStringArray("column") instance=ExtResource("2_qe5fa")]
+layout_mode = 2
+column = NodePath("..")

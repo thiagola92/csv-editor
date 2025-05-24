@@ -3,9 +3,9 @@ class_name Cell
 extends TextEdit
 
 
-const CellWindowScene: PackedScene = preload("./cell_window/cell_window.tscn")
+const CellWindowScene: PackedScene = preload("../cell_window/cell_window.tscn")
 
-var cell_window: CellWindow
+var _cell_window: CellWindow
 
 
 func _ready() -> void:
@@ -35,12 +35,12 @@ func reset_scroll_position() -> void:
 
 
 func focus_cell_window() -> void:
-	if cell_window:
-		return cell_window.grab_focus()
+	if _cell_window:
+		return _cell_window.grab_focus()
 	
-	cell_window = CellWindowScene.instantiate()
-	cell_window.cell = self
-	add_child(cell_window)
+	_cell_window = CellWindowScene.instantiate()
+	_cell_window.cell = self
+	add_child(_cell_window)
 
 
 func _on_id_pressed(id: int) -> void:

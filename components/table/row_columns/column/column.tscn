@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bp6g2pxcpg0ys"]
-
-[ext_resource type="Script" uid="uid://bxeeteoxqwlhk" path="res://components/table/row_columns/column/column.gd" id="1_uuiov"]
-
-[node name="Column" type="HBoxContainer"]
-script = ExtResource("1_uuiov")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://q67pd2qcfsh2"]
 
-[ext_resource type="Script" uid="uid://dda325pd61kmi" path="res://components/table/row_cells/cell/cell_window/cell_window.gd" id="1_kibe3"]
+[ext_resource type="Script" uid="uid://dda325pd61kmi" path="res://components/table/cell_window/cell_window.gd" id="1_kibe3"]
 
 [node name="CellWindow" type="Window"]
 initial_position = 5

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0ewr05vl806w"
-path="res://.godot/imported/ActionUndo.svg-b56514de7ce08415b2f78307edb2bbb4.ctex"
+uid="uid://cledja5n3mnqk"
+path="res://.godot/imported/ActionRedo.svg-9b7c5e5bb413f011016c42eaae1c6e0a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://components/table/row_cells/cell/cell_menu/ActionUndo.svg"
-dest_files=["res://.godot/imported/ActionUndo.svg-b56514de7ce08415b2f78307edb2bbb4.ctex"]
+source_file="res://components/table/cell_menu/ActionRedo.svg"
+dest_files=["res://.godot/imported/ActionRedo.svg-9b7c5e5bb413f011016c42eaae1c6e0a.ctex"]
 
 [params]
 

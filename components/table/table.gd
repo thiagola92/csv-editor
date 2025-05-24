@@ -1,7 +1,7 @@
 ## Holds all rows and take care of interactions between them.
 ##
 ## [codeblock]
-## |       | column 0 | column 1 | column 2 | ... | column X |
+## | empty | column 0 | column 1 | column 2 | ... | column X |
 ## | ------------------------------------------------------- |
 ## | row 0 | cell 0   | cell 1   | cell 2   | ... | cell X   |
 ## | ------------------------------------------------------- |
