@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxtx3okenfjel"]
+[gd_scene load_steps=3 format=3 uid="uid://bxtx3okenfjel"]
 
 [ext_resource type="Script" uid="uid://cdt3wojqgnk83" path="res://components/table/table.gd" id="1_2uxhm"]
+[ext_resource type="PackedScene" uid="uid://cp537rvf7vhsi" path="res://components/table/row_columns/row_columns.tscn" id="2_i4c8w"]
 
 [node name="Table" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_2uxhm")
+
+[node name="RowColumns" parent="." instance=ExtResource("2_i4c8w")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[connection signal="add_row_requested" from="RowColumns" to="." method="_on_row_columns_add_row_requested"]
+[connection signal="column_added" from="RowColumns" to="." method="_on_row_columns_column_added"]
+[connection signal="column_header_width_changed" from="RowColumns" to="." method="_on_row_columns_column_header_width_changed"]

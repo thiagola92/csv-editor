@@ -18,12 +18,12 @@ config/icon="res://icon.svg"
 [display]
 
 window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
 
 [file_customization]
 
 folder_colors={
-"res://components/": "green",
-"res://singletons/": "pink"
+"res://components/": "green"
 }
 
 [rendering]

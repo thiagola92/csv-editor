@@ -16,6 +16,7 @@ script = ExtResource("1_w3mli")
 layout_mode = 2
 
 [node name="RowHeader" parent="Row" instance=ExtResource("2_cp126")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Cells" type="HBoxContainer" parent="Row"]
@@ -26,3 +27,6 @@ size_flags_horizontal = 3
 [node name="RowSeparator" parent="." node_paths=PackedStringArray("row") instance=ExtResource("3_04jpx")]
 layout_mode = 2
 row = NodePath("../Row")
+
+[connection signal="add_above_requested" from="Row/RowHeader" to="." method="_on_row_header_add_above_requested"]
+[connection signal="add_below_requested" from="Row/RowHeader" to="." method="_on_row_header_add_below_requested"]

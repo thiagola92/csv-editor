@@ -22,6 +22,26 @@ func _process(_delta: float) -> void:
 	_resize_column()
 
 
+func _resize_column() -> void:
+	var distance: float = get_global_mouse_position().x - _initial_x_position
+	
+	if column:
+		column.custom_minimum_size.x = _initial_x_size + distance
+		
+		await column.item_rect_changed
+		column.minimum_size_changed.emit()
+
+
+func _reset_column() -> void:
+	set_process(false)
+	
+	if column:
+		column.custom_minimum_size.x = 0
+		
+		await column.item_rect_changed
+		column.minimum_size_changed.emit()
+
+
 func _follow_mouse() -> void:
 	set_process(true)
 	
@@ -29,18 +49,6 @@ func _follow_mouse() -> void:
 	
 	if column:
 		_initial_x_size = column.size.x
-
-
-func _reset_column() -> void:
-	if column:
-		column.custom_minimum_size.x = 0
-
-
-func _resize_column() -> void:
-	var distance: float = get_global_mouse_position().x - _initial_x_position
-	
-	if column:
-		column.custom_minimum_size.x = _initial_x_size + distance
 
 
 func _on_gui_input(event: InputEvent) -> void:

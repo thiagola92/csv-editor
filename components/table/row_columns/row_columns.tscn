@@ -16,6 +16,7 @@ script = ExtResource("1_myn47")
 layout_mode = 2
 
 [node name="EmptyHeader" parent="Row" instance=ExtResource("2_lyjsh")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Columns" type="HBoxContainer" parent="Row"]
@@ -27,4 +28,6 @@ size_flags_horizontal = 3
 layout_mode = 2
 row = NodePath("../Row")
 
+[connection signal="add_column_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_column_requested"]
+[connection signal="add_row_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_row_requested"]
 [connection signal="minimum_size_changed" from="Row/EmptyHeader" to="." method="_on_empty_header_minimum_size_changed"]
