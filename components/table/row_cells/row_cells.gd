@@ -12,75 +12,10 @@ class_name RowCells
 extends VBoxContainer
 
 
-signal add_row_requested(index: int)
-
-signal row_header_width_changed
-
 const CellScene: PackedScene = preload("../cell/cell.tscn")
 
-@onready var _row_header: RowHeader = %RowHeader
+@export var table: Table
 
-@onready var _cells: HBoxContainer = %Cells
+@onready var row_header: RowHeader = %RowHeader
 
-
-func add_cell(index: int) -> void:
-	var cell: Cell = CellScene.instantiate()
-	
-	_cells.add_child(cell)
-	_cells.move_child(cell, index)
-
-
-func get_cells_count() -> int:
-	return _cells.get_child_count()
-
-
-func get_row_header_width() -> float:
-	return _row_header.custom_minimum_size.x
-
-
-func set_cell_width(index: int, x: float) -> void:
-	(_cells.get_child(index) as Cell).custom_minimum_size.x = x
-
-
-func set_row_header_width(x: float) -> void:
-	_row_header.custom_minimum_size.x = x
-
-
-func set_row_header_text(text: String) -> void:
-	_row_header.set_text(text)
-
-
-func _on_row_header_add_above_requested() -> void:
-	if get_index() > 0:
-		add_row_requested.emit(get_index() - 1)
-	else:
-		add_row_requested.emit(0)
-
-
-func _on_row_header_add_below_requested() -> void:
-	add_row_requested.emit(get_index() + 1)
-
-
-func _on_row_header_clear_requested() -> void:
-	for c: Cell in _cells.get_children():
-		c.clear()
-
-
-func _on_row_header_copy_requested() -> void:
-	pass # Replace with function body.
-
-
-func _on_row_header_cut_requested() -> void:
-	pass # Replace with function body.
-
-
-func _on_row_header_delete_requested() -> void:
-	pass # Replace with function body.
-
-
-func _on_row_header_paste_requested() -> void:
-	pass # Replace with function body.
-
-
-func _on_row_header_minimum_size_changed() -> void:
-	row_header_width_changed.emit()
+@onready var cells: HBoxContainer = %Cells

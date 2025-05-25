@@ -17,13 +17,9 @@ signal clear_requested
 
 signal delete_requested
 
-@onready var _label: Label = %Label
+@onready var label: Label = %Label
 
-@onready var _row_menu: RowMenu = $RowMenu
-
-
-func set_text(text: String) -> void:
-	_label.text = text
+@onready var row_menu: RowMenu = $RowMenu
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -33,7 +29,7 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_RIGHT:
-		_row_menu.popup(
+		row_menu.popup(
 			Rect2i(
 				get_window().position + (get_global_mouse_position() as Vector2i),
 				Vector2i(0, 0)

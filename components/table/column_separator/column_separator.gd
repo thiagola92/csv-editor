@@ -6,9 +6,9 @@ extends VSeparator
 ## Set to the Control that you want the minimum_size.x changed.
 @export var column: Control
 
-var _initial_x_position: float
+var initial_x_position: float
 
-var _initial_x_size: float
+var initial_x_size: float
 
 
 func _ready() -> void:
@@ -19,20 +19,20 @@ func _process(_delta: float) -> void:
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		return set_process(false)
 	
-	_resize_column()
+	resize_column()
 
 
-func _resize_column() -> void:
-	var distance: float = get_global_mouse_position().x - _initial_x_position
+func resize_column() -> void:
+	var distance: float = get_global_mouse_position().x - initial_x_position
 	
 	if column:
-		column.custom_minimum_size.x = _initial_x_size + distance
+		column.custom_minimum_size.x = initial_x_size + distance
 		
 		await column.item_rect_changed
 		column.minimum_size_changed.emit()
 
 
-func _reset_column() -> void:
+func reset_column() -> void:
 	set_process(false)
 	
 	if column:
@@ -42,13 +42,13 @@ func _reset_column() -> void:
 		column.minimum_size_changed.emit()
 
 
-func _follow_mouse() -> void:
+func follow_mouse() -> void:
 	set_process(true)
 	
-	_initial_x_position = get_global_mouse_position().x
+	initial_x_position = get_global_mouse_position().x
 	
 	if column:
-		_initial_x_size = column.size.x
+		initial_x_size = column.size.x
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -58,6 +58,6 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
-		_reset_column()
+		reset_column()
 	elif event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_follow_mouse()
+		follow_mouse()

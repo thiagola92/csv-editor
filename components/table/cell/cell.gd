@@ -9,14 +9,14 @@ var cell_window: CellWindow
 
 
 func _ready() -> void:
-	_hide_scroll_grabber()
+	hide_scroll_grabber()
 	
 	CellMenu.setup(get_menu())
 	
 	get_menu().id_pressed.connect(_on_id_pressed)
 
 
-func _hide_scroll_grabber() -> void:
+func hide_scroll_grabber() -> void:
 	get_v_scroll_bar().add_theme_stylebox_override("scroll", StyleBoxEmpty.new())
 	get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", StyleBoxEmpty.new())
 	get_v_scroll_bar().add_theme_stylebox_override("grabber", StyleBoxEmpty.new())
@@ -29,7 +29,7 @@ func _hide_scroll_grabber() -> void:
 	get_h_scroll_bar().add_theme_stylebox_override("grabber_pressed", StyleBoxEmpty.new())
 
 
-func _focus_cell_window() -> void:
+func focus_cell_window() -> void:
 	if cell_window:
 		return cell_window.grab_focus()
 	
@@ -38,7 +38,7 @@ func _focus_cell_window() -> void:
 	add_child(cell_window)
 
 
-func _reset_scroll_position() -> void:
+func reset_scroll_position() -> void:
 	get_v_scroll_bar().value = 0
 	get_h_scroll_bar().value = 0
 
@@ -46,11 +46,11 @@ func _reset_scroll_position() -> void:
 func _on_id_pressed(id: int) -> void:
 	match id:
 		CellMenu.MENU_WINDOW:
-			_focus_cell_window()
+			focus_cell_window()
 
 
 func _on_focus_exited() -> void:
-	_reset_scroll_position()
+	reset_scroll_position()
 	editable = false
 
 

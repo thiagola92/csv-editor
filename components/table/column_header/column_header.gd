@@ -17,13 +17,9 @@ signal clear_requested(index: int)
 
 signal delete_requested(index: int)
 
-@export var _label: Label
+@export var label: Label
 
-@onready var _column_menu: ColumnMenu = $ColumnMenu
-
-
-func set_text(text: String) -> void:
-	_label.text = text
+@onready var column_menu: ColumnMenu = $ColumnMenu
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -33,7 +29,7 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_RIGHT:
-		_column_menu.popup(
+		column_menu.popup(
 			Rect2i(
 				get_window().position + (get_global_mouse_position() as Vector2i),
 				Vector2i(0, 0)

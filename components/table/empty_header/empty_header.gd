@@ -15,7 +15,7 @@ signal add_row_requested
 
 signal clear_requested
 
-@onready var _empty_menu: EmptyMenu = $EmptyMenu
+@onready var empty_menu: EmptyMenu = $EmptyMenu
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -25,7 +25,7 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_RIGHT:
-		_empty_menu.popup(
+		empty_menu.popup(
 			Rect2i(
 				get_window().position + (get_global_mouse_position() as Vector2i),
 				Vector2i(0, 0)

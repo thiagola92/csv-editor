@@ -17,8 +17,3 @@ layout_mode = 2
 
 [node name="Rows" type="VBoxContainer" parent="."]
 layout_mode = 2
-
-[connection signal="add_row_requested" from="RowColumns" to="." method="_on_row_columns_add_row_requested"]
-[connection signal="column_added" from="RowColumns" to="." method="_on_row_columns_column_added"]
-[connection signal="column_header_width_changed" from="RowColumns" to="." method="_on_row_columns_column_header_width_changed"]
-[connection signal="empty_header_width_changed" from="RowColumns" to="." method="_on_row_columns_empty_header_width_changed"]

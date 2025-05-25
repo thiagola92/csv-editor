@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://bk2g2d2b07n18" path="res://components/table/column_separator/column_separator.tscn" id="2_qe5fa"]
 [ext_resource type="PackedScene" uid="uid://c7xx1scgoe63e" path="res://components/table/column_menu/column_menu.tscn" id="3_web75"]
 
-[node name="ColumnHeader" type="HBoxContainer" node_paths=PackedStringArray("_label")]
+[node name="ColumnHeader" type="HBoxContainer" node_paths=PackedStringArray("label")]
 offset_right = 72.0
 offset_bottom = 32.0
 script = ExtResource("1_ip8xt")
-_label = NodePath("CenterContainer/Label")
+label = NodePath("CenterContainer/Label")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
