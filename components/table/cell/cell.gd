@@ -57,9 +57,15 @@ func _on_focus_exited() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		_on_gui_mouse_button(event)
+	elif event is InputEventKey:
+		_on_gui_key(event)
 
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
 		editable = true
 		caret_blink = true
+
+
+func _on_gui_key(event: InputEventKey) -> void:
+	pass

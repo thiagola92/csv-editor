@@ -46,7 +46,7 @@ func set_row_header_width(x: float) -> void:
 	_row_header.custom_minimum_size.x = x
 
 
-func set_text(text: String) -> void:
+func set_row_header_text(text: String) -> void:
 	_row_header.set_text(text)
 
 
@@ -59,6 +59,27 @@ func _on_row_header_add_above_requested() -> void:
 
 func _on_row_header_add_below_requested() -> void:
 	add_row_requested.emit(get_index() + 1)
+
+
+func _on_row_header_clear_requested() -> void:
+	for c: Cell in _cells.get_children():
+		c.clear()
+
+
+func _on_row_header_copy_requested() -> void:
+	pass # Replace with function body.
+
+
+func _on_row_header_cut_requested() -> void:
+	pass # Replace with function body.
+
+
+func _on_row_header_delete_requested() -> void:
+	pass # Replace with function body.
+
+
+func _on_row_header_paste_requested() -> void:
+	pass # Replace with function body.
 
 
 func _on_row_header_minimum_size_changed() -> void:

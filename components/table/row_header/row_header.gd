@@ -3,9 +3,19 @@ class_name RowHeader
 extends HBoxContainer
 
 
+signal cut_requested
+
+signal copy_requested
+
+signal paste_requested
+
 signal add_above_requested
 
 signal add_below_requested
+
+signal clear_requested
+
+signal delete_requested
 
 @onready var _label: Label = %Label
 
@@ -34,14 +44,16 @@ func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 func _on_row_menu_id_pressed(id: int) -> void:
 	match id:
 		RowMenu.MENU_CUT:
-			pass
+			cut_requested.emit()
 		RowMenu.MENU_COPY:
-			pass
+			copy_requested.emit()
 		RowMenu.MENU_PASTE:
-			pass
+			paste_requested.emit()
 		RowMenu.MENU_ADD_ABOVE:
 			add_above_requested.emit()
 		RowMenu.MENU_ADD_BELOW:
 			add_below_requested.emit()
 		RowMenu.MENU_CLEAR:
-			pass
+			clear_requested.emit()
+		RowMenu.MENU_DELETE:
+			delete_requested.emit()

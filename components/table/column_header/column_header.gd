@@ -3,9 +3,19 @@ class_name ColumnHeader
 extends HBoxContainer
 
 
+signal cut_requested(index: int)
+
+signal copy_requested(index: int)
+
+signal paste_requested(index: int)
+
 signal add_before_requested(index: int)
 
 signal add_after_requested(index: int)
+
+signal clear_requested(index: int)
+
+signal delete_requested(index: int)
 
 @export var _label: Label
 
@@ -34,16 +44,16 @@ func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 func _on_column_menu_id_pressed(id: int) -> void:
 	match id:
 		ColumnMenu.MENU_CUT:
-			pass
+			cut_requested.emit(get_index())
 		ColumnMenu.MENU_COPY:
-			pass
+			copy_requested.emit(get_index())
 		ColumnMenu.MENU_PASTE:
-			pass
+			paste_requested.emit(get_index())
 		ColumnMenu.MENU_ADD_BEFORE:
 			add_before_requested.emit(get_index())
 		ColumnMenu.MENU_ADD_AFTER:
 			add_after_requested.emit(get_index())
 		ColumnMenu.MENU_CLEAR:
-			pass
+			clear_requested.emit(get_index())
 		ColumnMenu.MENU_DELETE:
-			pass
+			delete_requested.emit(get_index())

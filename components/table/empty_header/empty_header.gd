@@ -3,9 +3,17 @@ class_name EmptyHeader
 extends HBoxContainer
 
 
+signal cut_requested
+
+signal copy_requested
+
+signal paste_requested
+
 signal add_column_requested
 
 signal add_row_requested
+
+signal clear_requested
 
 @onready var _empty_menu: EmptyMenu = $EmptyMenu
 
@@ -28,14 +36,14 @@ func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 func _on_empty_menu_id_pressed(id: int) -> void:
 	match id:
 		EmptyMenu.MENU_CUT:
-			pass
+			cut_requested.emit()
 		EmptyMenu.MENU_COPY:
-			pass
+			copy_requested.emit()
 		EmptyMenu.MENU_PASTE:
-			pass
+			paste_requested.emit()
 		EmptyMenu.MENU_ADD_COLUMN:
 			add_column_requested.emit()
 		EmptyMenu.MENU_ADD_ROW:
 			add_row_requested.emit()
 		EmptyMenu.MENU_CLEAR:
-			pass
+			clear_requested.emit()

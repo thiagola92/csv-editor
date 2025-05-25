@@ -27,7 +27,7 @@ func _on_row_columns_add_row_requested() -> void:
 	
 	_rows.add_child(row_cells)
 	values.resize(_row_columns.get_columns_count())
-	row_cells.set_text(str(row_cells.get_index()))
+	row_cells.set_row_header_text(str(row_cells.get_index()))
 	row_cells.row_header_width_changed.connect(
 		_on_row_cells_row_header_width_changed.bind(row_cells)
 	)

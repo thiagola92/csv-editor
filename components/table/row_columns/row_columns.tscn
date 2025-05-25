@@ -30,4 +30,8 @@ row = NodePath("../Row")
 
 [connection signal="add_column_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_column_requested"]
 [connection signal="add_row_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_row_requested"]
+[connection signal="clear_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_clear_requested"]
+[connection signal="copy_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_copy_requested"]
+[connection signal="cut_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_cut_requested"]
 [connection signal="minimum_size_changed" from="Row/EmptyHeader" to="." method="_on_empty_header_minimum_size_changed"]
+[connection signal="paste_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_paste_requested"]
