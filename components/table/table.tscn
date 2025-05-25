@@ -11,9 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2uxhm")
 
-[node name="RowColumns" parent="." instance=ExtResource("2_i4c8w")]
+[node name="RowColumns" parent="." node_paths=PackedStringArray("table") instance=ExtResource("2_i4c8w")]
 unique_name_in_owner = true
 layout_mode = 2
+table = NodePath("..")
 
 [node name="Rows" type="VBoxContainer" parent="."]
 layout_mode = 2

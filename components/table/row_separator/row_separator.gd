@@ -3,7 +3,7 @@ class_name RowSeparator
 extends HSeparator
 
 
-## Set to the Control that you want the minimum_size.y changed.
+## Set to the Control that you want the custom_minimum_size changed.
 @export var row: Control
 
 var initial_y_position: float

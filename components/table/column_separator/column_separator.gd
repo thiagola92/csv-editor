@@ -3,7 +3,7 @@ class_name ColumnSeparator
 extends VSeparator
 
 
-## Set to the Control that you want the minimum_size.x changed.
+## Set to the Control that you want the custom_minimum_size changed.
 @export var column: Control
 
 var initial_x_position: float

@@ -19,3 +19,7 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 @onready var row_columns: RowColumns = $RowColumns
 
 @onready var rows: VBoxContainer = $Rows
+
+
+func add_row(index: int) -> void:
+	pass

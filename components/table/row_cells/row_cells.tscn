@@ -28,8 +28,11 @@ size_flags_horizontal = 3
 layout_mode = 2
 row = NodePath("../Row")
 
+[connection signal="add_above_requested" from="Row/RowHeader" to="." method="_on_row_header_add_above_requested"]
+[connection signal="add_below_requested" from="Row/RowHeader" to="." method="_on_row_header_add_below_requested"]
 [connection signal="clear_requested" from="Row/RowHeader" to="." method="_on_row_header_clear_requested"]
 [connection signal="copy_requested" from="Row/RowHeader" to="." method="_on_row_header_copy_requested"]
 [connection signal="cut_requested" from="Row/RowHeader" to="." method="_on_row_header_cut_requested"]
 [connection signal="delete_requested" from="Row/RowHeader" to="." method="_on_row_header_delete_requested"]
+[connection signal="minimum_size_changed" from="Row/RowHeader" to="." method="_on_row_header_minimum_size_changed"]
 [connection signal="paste_requested" from="Row/RowHeader" to="." method="_on_row_header_paste_requested"]

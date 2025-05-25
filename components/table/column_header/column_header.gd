@@ -22,6 +22,10 @@ signal delete_requested(index: int)
 @onready var column_menu: ColumnMenu = $ColumnMenu
 
 
+func update_label(index: int) -> void:
+	label.text = str(index)
+
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		_on_gui_mouse_button(event)
