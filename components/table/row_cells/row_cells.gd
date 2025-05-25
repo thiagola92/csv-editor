@@ -21,11 +21,22 @@ const CellScene: PackedScene = preload("../cell/cell.tscn")
 @onready var cells: HBoxContainer = %Cells
 
 
+###############################################################
+# Cell methods
+###############################################################
+
+
 func add_cell(index: int) -> void:
 	var cell: Cell = CellScene.instantiate()
 	
 	cells.add_child(cell)
 	cells.move_child(cell, index)
+
+
+func get_cells() -> Array[Cell]:
+	var array: Array[Cell]
+	array.assign(cells.get_children())
+	return array
 
 
 func move_cell(from: int, to: int) -> void:
@@ -43,10 +54,8 @@ func set_cell_width(index: int, x: float) -> void:
 	cell.custom_minimum_size.x = x
 
 
-func update_row_label(index: int) -> void:
-	row_header.update_label(index)
-
-
+###############################################################
+# RowHeader signals
 ###############################################################
 
 

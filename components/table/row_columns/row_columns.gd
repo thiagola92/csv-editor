@@ -23,18 +23,35 @@ const ColumnHeaderScene: PackedScene = preload("../column_header/column_header.t
 @onready var columns: HBoxContainer = %Columns
 
 
+###############################################################
+# Column methods
+###############################################################
+
+
 func add_column(index: int) -> void:
 	var column_header: ColumnHeader = ColumnHeaderScene.instantiate()
 	
 	columns.add_child(column_header)
 	columns.move_child(column_header, index)
+	link_column_signals(column_header)
+
+
+func get_column_width(index: int) -> float:
+	var column_header := columns.get_child(index) as ColumnHeader
+	return column_header.size.x # NOTE: Not the custom_minimum_size.
+
+
+func get_columns() -> Array[ColumnHeader]:
+	var array: Array[ColumnHeader]
+	array.assign(columns.get_children())
+	return array
 
 
 func get_columns_count() -> int:
 	return columns.get_child_count()
 
 
-func link_signals(column_header: ColumnHeader) -> void:
+func link_column_signals(column_header: ColumnHeader) -> void:
 	column_header.add_after_requested.connect(_on_column_header_add_after_requested)
 	column_header.add_before_requested.connect(_on_column_header_add_before_requested)
 	column_header.clear_requested.connect(_on_column_header_clear_requested)
@@ -66,6 +83,13 @@ func update_column_label(index: int) -> void:
 	column_header.update_label(index)
 
 
+func update_columns_label(start: int = 0) -> void:
+	for i in range(start, get_columns_count()):
+		update_column_label(i)
+
+
+###############################################################
+# EmptyHeader signals
 ###############################################################
 
 
@@ -73,12 +97,26 @@ func _on_empty_header_add_column_requested() -> void:
 	var index: int = get_columns_count()
 	
 	add_column(index)
-	update_column_label(index)
+	update_columns_label(index)
+	
+	if not table:
+		return
+	
+	var width: float = get_column_width(index)
+	
+	for r in table.get_rows():
+		r.add_cell(index)
+		r.set_cell_width(index, width)
 
 
 func _on_empty_header_add_row_requested() -> void:
 	if not table:
 		return
+	
+	var index: int = table.get_rows_count()
+	
+	table.add_row(index)
+	table.update_row_label(index)
 
 
 func _on_empty_header_clear_requested() -> void:
@@ -107,16 +145,38 @@ func _on_empty_header_minimum_size_changed() -> void:
 
 
 ###############################################################
+# ColumnHeader signals
+###############################################################
 
 
 func _on_column_header_add_after_requested(index: int) -> void:
-	add_column(index + 1)
-	update_column_label(index + 1)
+	index += 1
+	
+	add_column(index)
+	update_columns_label(index)
+	
+	if not table:
+		return
+	
+	var width: float = get_column_width(index)
+	
+	for r in table.get_rows():
+		r.add_cell(index)
+		r.set_cell_width(index, width)
 
 
 func _on_column_header_add_before_requested(index: int) -> void:
 	add_column(index)
-	update_column_label(index)
+	update_columns_label(index)
+	
+	if not table:
+		return
+	
+	var width: float = get_column_width(index)
+	
+	for r in table.get_rows():
+		r.add_cell(index)
+		r.set_cell_width(index, width)
 
 
 func _on_column_header_clear_requested(index: int) -> void:
