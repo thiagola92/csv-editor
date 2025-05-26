@@ -22,7 +22,8 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 
 
 ###############################################################
-# Row methods
+# Row methods (CORE)
+# add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
 
 
@@ -40,31 +41,42 @@ func add_row(index: int) -> void:
 		row_cells.set_cell_width(i, w)
 
 
+func get_row(index: int) -> RowCells:
+	return rows.get_child(index) as RowCells
+
+
 func get_rows() -> Array[RowCells]:
 	var array: Array[RowCells]
 	array.assign(rows.get_children())
 	return array
 
 
+func move_row(from: int, to: int) -> void:
+	rows.move_child(get_row(from), to)
+
+
+func remove_row(index: int) -> void:
+	get_row(index).queue_free()
+
+
+###############################################################
+# Row methods (UTILITY)
+###############################################################
+
+
 func get_rows_count() -> int:
 	return rows.get_child_count()
 
 
-func move_row(from: int, to: int) -> void:
-	var row_cells := rows.get_child(from) as RowCells
-	rows.move_child(row_cells, to)
+func clear_row(index: int) -> void:
+	get_row(index).clear_cells()
 
 
-func remove_row(index: int) -> void:
-	var row_cells := rows.get_child(index) as RowCells
-	row_cells.queue_free()
-
-
-func update_row_label(index: int) -> void:
-	var row_cells := rows.get_child(index) as RowCells
-	row_cells.row_header.update_label(index)
+func clear_rows() -> void:
+	for r in get_rows():
+		r.clear_cells()
 
 
 func update_rows_label(start: int = 0) -> void:
 	for i in range(start, get_rows_count()):
-		update_row_label(i)
+		get_row(i).update_label(i)

@@ -24,7 +24,8 @@ const ColumnHeaderScene: PackedScene = preload("../column_header/column_header.t
 
 
 ###############################################################
-# Column methods
+# Column methods (CORE)
+# add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
 
 
@@ -33,25 +34,7 @@ func add_column(index: int) -> void:
 	
 	columns.add_child(column_header)
 	columns.move_child(column_header, index)
-	link_column_signals(column_header)
-
-
-func get_column_width(index: int) -> float:
-	var column_header := columns.get_child(index) as ColumnHeader
-	return column_header.size.x # NOTE: Not the custom_minimum_size.
-
-
-func get_columns() -> Array[ColumnHeader]:
-	var array: Array[ColumnHeader]
-	array.assign(columns.get_children())
-	return array
-
-
-func get_columns_count() -> int:
-	return columns.get_child_count()
-
-
-func link_column_signals(column_header: ColumnHeader) -> void:
+	
 	column_header.add_after_requested.connect(_on_column_header_add_after_requested)
 	column_header.add_before_requested.connect(_on_column_header_add_before_requested)
 	column_header.clear_requested.connect(_on_column_header_clear_requested)
@@ -63,29 +46,44 @@ func link_column_signals(column_header: ColumnHeader) -> void:
 		_on_column_header_minimum_size_changed.bind(column_header))
 
 
+func get_column(index: int) -> ColumnHeader:
+	return columns.get_child(index) as ColumnHeader
+
+
+func get_columns() -> Array[ColumnHeader]:
+	var array: Array[ColumnHeader]
+	array.assign(columns.get_children())
+	return array
+
+
 func move_column(from: int, to: int) -> void:
-	var column_header := columns.get_child(from) as ColumnHeader
-	columns.move_child(column_header, to)
+	columns.move_child(get_column(from), to)
 
 
 func remove_column(index: int) -> void:
-	var column_header := columns.get_child(index) as ColumnHeader
-	column_header.queue_free()
+	get_column(index).queue_free()
+
+
+###############################################################
+# Column methods (UTILITY)
+###############################################################
+
+
+func get_columns_count() -> int:
+	return columns.get_child_count()
+
+
+func get_column_width(index: int) -> float:
+	return get_column(index).size.x # NOTE: Not the custom_minimum_size.
 
 
 func set_column_width(index: int, x: float) -> void:
-	var column_header := columns.get_child(index) as ColumnHeader
-	column_header.custom_minimum_size.x = x
-
-
-func update_column_label(index: int) -> void:
-	var column_header := columns.get_child(index) as ColumnHeader
-	column_header.update_label(index)
+	get_column(index).custom_minimum_size.x = x
 
 
 func update_columns_label(start: int = 0) -> void:
 	for i in range(start, get_columns_count()):
-		update_column_label(i)
+		get_column(i).update_label(i)
 
 
 ###############################################################
@@ -116,12 +114,15 @@ func _on_empty_header_add_row_requested() -> void:
 	var index: int = table.get_rows_count()
 	
 	table.add_row(index)
-	table.update_row_label(index)
+	table.update_rows_label(index)
 
 
 func _on_empty_header_clear_requested() -> void:
 	if not table:
 		return
+	
+	for r in table.get_rows():
+		r.clear_cells()
 
 
 func _on_empty_header_copy_requested() -> void:
@@ -182,6 +183,9 @@ func _on_column_header_add_before_requested(index: int) -> void:
 func _on_column_header_clear_requested(index: int) -> void:
 	if not table:
 		return
+	
+	for r in table.get_rows():
+		r.clear_cell(index)
 
 
 func _on_column_header_copy_requested(index: int) -> void:
@@ -197,6 +201,9 @@ func _on_column_header_cut_requested(index: int) -> void:
 func _on_column_header_delete_requested(index: int) -> void:
 	if not table:
 		return
+	
+	for r in table.get_rows():
+		r.remove_cell(index)
 
 
 func _on_column_header_paste_requested(index: int) -> void:
@@ -207,3 +214,9 @@ func _on_column_header_paste_requested(index: int) -> void:
 func _on_column_header_minimum_size_changed(column_header: ColumnHeader) -> void:
 	if not table:
 		return
+	
+	var index: int = column_header.get_index()
+	var width: float = get_column_width(index)
+	
+	for r in table.get_rows():
+		r.set_cell_width(index, width)

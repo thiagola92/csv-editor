@@ -22,7 +22,8 @@ const CellScene: PackedScene = preload("../cell/cell.tscn")
 
 
 ###############################################################
-# Cell methods
+# Cell methods (CORE)
+# add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
 
 
@@ -33,6 +34,10 @@ func add_cell(index: int) -> void:
 	cells.move_child(cell, index)
 
 
+func get_cell(index: int) -> Cell:
+	return cells.get_child(index) as Cell
+
+
 func get_cells() -> Array[Cell]:
 	var array: Array[Cell]
 	array.assign(cells.get_children())
@@ -40,18 +45,33 @@ func get_cells() -> Array[Cell]:
 
 
 func move_cell(from: int, to: int) -> void:
-	var cell = cells.get_child(from) as Cell
-	cells.move_child(cell, to)
+	cells.move_child(get_cell(from), to)
 
 
 func remove_cell(index: int) -> void:
-	var cell := cells.get_child(index) as Cell
-	cell.queue_free()
+	get_cell(index).queue_free()
+
+
+###############################################################
+# Cell methods (UTILITY)
+###############################################################
 
 
 func set_cell_width(index: int, x: float) -> void:
-	var cell := cells.get_child(index) as Cell
-	cell.custom_minimum_size.x = x
+	get_cell(index).custom_minimum_size.x = x
+
+
+func clear_cell(index: int) -> void:
+	get_cell(index).clear()
+
+
+func clear_cells() -> void:
+	for c in get_cells():
+		c.clear()
+
+
+func update_label(index: int) -> void:
+	row_header.update_label(index)
 
 
 ###############################################################
