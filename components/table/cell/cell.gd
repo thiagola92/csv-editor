@@ -49,6 +49,11 @@ func _on_id_pressed(id: int) -> void:
 			focus_cell_window()
 
 
+func _on_text_set() -> void:
+	if cell_window:
+		cell_window.text_edit.text = text
+
+
 func _on_focus_exited() -> void:
 	reset_scroll_position()
 	editable = false
@@ -63,8 +68,9 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
-		editable = true
-		caret_blink = true
+		if not cell_window:
+			editable = true
+			caret_blink = true
 
 
 func _on_gui_key(event: InputEventKey) -> void:

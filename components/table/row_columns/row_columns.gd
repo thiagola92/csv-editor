@@ -228,6 +228,8 @@ func _on_column_header_delete_requested(index: int) -> void:
 	if not table:
 		return
 	
+	remove_column(index)
+	
 	for r in table.get_rows():
 		r.remove_cell(index)
 

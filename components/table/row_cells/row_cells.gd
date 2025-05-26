@@ -96,11 +96,17 @@ func clear_cells() -> void:
 func _on_row_header_add_above_requested() -> void:
 	if not table:
 		return
+	
+	table.add_row(get_index())
+	table.update_rows_label(get_index() - 1)
 
 
 func _on_row_header_add_below_requested() -> void:
 	if not table:
 		return
+	
+	table.add_row(get_index() + 1)
+	table.update_rows_label(get_index() + 1)
 
 
 func _on_row_header_clear_requested() -> void:
