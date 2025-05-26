@@ -81,12 +81,12 @@ func remove_column(index: int) -> void:
 ###############################################################
 
 
-func get_columns_count() -> int:
-	return columns.get_child_count()
-
-
 func get_column_width(index: int) -> float:
 	return get_column(index).size.x # NOTE: Not the custom_minimum_size.
+
+
+func get_columns_count() -> int:
+	return columns.get_child_count()
 
 
 func get_columns_width(start: int, end: int) -> Array[float]:

@@ -75,17 +75,23 @@ func remove_cell(index: int) -> void:
 ###############################################################
 
 
+func get_cells_count() -> int:
+	return cells.get_child_count()
+
+
 func set_cell_width(index: int, x: float) -> void:
 	get_cell(index).custom_minimum_size.x = x
 
 
 func clear_cell(index: int) -> void:
 	get_cell(index).clear()
+	get_cell(index).sync_window_text()
 
 
 func clear_cells() -> void:
 	for c in get_cells():
 		c.clear()
+		c.sync_window_text()
 
 
 ###############################################################
@@ -110,25 +116,23 @@ func _on_row_header_add_below_requested() -> void:
 
 
 func _on_row_header_clear_requested() -> void:
-	for cell: Cell in cells.get_children():
-		cell.clear()
+	clear_cells()
 
 
 func _on_row_header_copy_requested() -> void:
 	var values: Array[String] = []
 	
-	for cell: Cell in cells.get_children():
-		values.append(cell.text)
+	for c in get_cells():
+		values.append(c.text)
 	
-	# TODO: Transform in one line like
-	# value1,value2,value3,value4
-	# and move to user CTRL+C.
-	# NOTE: maybe put in one function
-	# because "cut" also needs.
+	var text: String = CSVHelper.to_csv([values], true)
+	
+	DisplayServer.clipboard_set(text)
 
 
 func _on_row_header_cut_requested() -> void:
-	pass # Replace with function body.
+	_on_row_header_copy_requested()
+	_on_row_header_clear_requested()
 
 
 func _on_row_header_delete_requested() -> void:
@@ -136,7 +140,17 @@ func _on_row_header_delete_requested() -> void:
 
 
 func _on_row_header_paste_requested() -> void:
-	pass # Replace with function body.
+	var text: String = DisplayServer.clipboard_get()
+	var lines: Array[Array] = CSVHelper.from_text(text, true)
+	
+	if lines.size() <= 0:
+		return
+	
+	var values: Array = lines[0]
+	
+	for i in min(get_cells_count(), values.size()):
+		get_cell(i).text = values[i]
+		get_cell(i).sync_window_text()
 
 
 func _on_row_header_minimum_size_changed() -> void:

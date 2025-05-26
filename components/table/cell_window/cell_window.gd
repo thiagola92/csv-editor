@@ -17,6 +17,10 @@ func _ready() -> void:
 		cell.tree_exiting.connect(func(): cell = null)
 
 
+func clear() -> void:
+	text_edit.clear()
+
+
 func _on_close_requested() -> void:
 	queue_free()
 

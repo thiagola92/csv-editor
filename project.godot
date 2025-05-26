@@ -23,7 +23,8 @@ window/per_pixel_transparency/allowed=true
 [file_customization]
 
 folder_colors={
-"res://components/": "green"
+"res://components/": "green",
+"res://static/": "red"
 }
 
 [rendering]
