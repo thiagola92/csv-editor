@@ -24,6 +24,18 @@ const ColumnHeaderScene: PackedScene = preload("../column_header/column_header.t
 
 
 ###############################################################
+# EmptyHeader methods
+###############################################################
+
+
+func set_header_width(x: float) -> void:
+	# Update size too because RowCells will use it
+	# to set their custom_minimum_size.
+	empty_header.size.x = x
+	empty_header.custom_minimum_size.x = x
+
+
+###############################################################
 # Column methods (CORE)
 # add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
@@ -75,6 +87,15 @@ func get_columns_count() -> int:
 
 func get_column_width(index: int) -> float:
 	return get_column(index).size.x # NOTE: Not the custom_minimum_size.
+
+
+func get_columns_width(start: int, end: int) -> Array[float]:
+	var widths: Array[float] = []
+	
+	for i in range(start, end):
+		widths.append(get_column(i).size.x) # NOTE: Not the custom_minimum_size.
+		
+	return widths
 
 
 func set_column_width(index: int, x: float) -> void:
@@ -143,6 +164,11 @@ func _on_empty_header_paste_requested() -> void:
 func _on_empty_header_minimum_size_changed() -> void:
 	if not table:
 		return
+	
+	var width: float = empty_header.size.x # NOTE: Not the custom_minimum_size.
+
+	for r in table.get_rows():
+		r.set_header_width(width)
 
 
 ###############################################################

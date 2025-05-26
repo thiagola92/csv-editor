@@ -22,6 +22,19 @@ const CellScene: PackedScene = preload("../cell/cell.tscn")
 
 
 ###############################################################
+# RowHeader methods
+###############################################################
+
+
+func set_header_width(x: float) -> void:
+	row_header.custom_minimum_size.x = x
+
+
+func update_header_label(index: int) -> void:
+	row_header.update_label(index)
+
+
+###############################################################
 # Cell methods (CORE)
 # add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
@@ -32,6 +45,11 @@ func add_cell(index: int) -> void:
 	
 	cells.add_child(cell)
 	cells.move_child(cell, index)
+
+
+func add_cells(index: int, quantity: int) -> void:
+	for i in quantity:
+		add_cell(index)
 
 
 func get_cell(index: int) -> Cell:
@@ -68,10 +86,6 @@ func clear_cell(index: int) -> void:
 func clear_cells() -> void:
 	for c in get_cells():
 		c.clear()
-
-
-func update_label(index: int) -> void:
-	row_header.update_label(index)
 
 
 ###############################################################
@@ -122,3 +136,7 @@ func _on_row_header_paste_requested() -> void:
 func _on_row_header_minimum_size_changed() -> void:
 	if not table:
 		return
+	
+	var width: float = row_header.custom_minimum_size.x # NOTE: Not the custom_minimum_size.
+	
+	table.row_columns.set_header_width(width)

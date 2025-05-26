@@ -30,15 +30,16 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 func add_row(index: int) -> void:
 	var row_cells: RowCells = RowCellsScene.instantiate()
 	var columns_count: int = row_columns.get_columns_count()
+	var columns_width: Array[float] = row_columns.get_columns_width(0, columns_count)
+	
+	row_cells.table = self
 	
 	rows.add_child(row_cells)
 	rows.move_child(row_cells, index)
+	row_cells.add_cells(0, columns_count)
 	
 	for i in columns_count:
-		var w: float = row_columns.get_column_width(i)
-		
-		row_cells.add_cell(i)
-		row_cells.set_cell_width(i, w)
+		row_cells.set_cell_width(i, columns_width[i])
 
 
 func get_row(index: int) -> RowCells:
@@ -79,4 +80,4 @@ func clear_rows() -> void:
 
 func update_rows_label(start: int = 0) -> void:
 	for i in range(start, get_rows_count()):
-		get_row(i).update_label(i)
+		get_row(i).update_header_label(i)
