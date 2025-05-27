@@ -54,6 +54,7 @@ func add_column(index: int) -> void:
 	column_header.cut_requested.connect(_on_column_header_cut_requested)
 	column_header.delete_requested.connect(_on_column_header_delete_requested)
 	column_header.paste_requested.connect(_on_column_header_paste_requested)
+	column_header.move_requested.connect(_on_column_header_move_requested)
 	column_header.minimum_size_changed.connect(
 		_on_column_header_minimum_size_changed.bind(column_header))
 
@@ -265,6 +266,17 @@ func _on_column_header_paste_requested(index: int) -> void:
 			continue
 		
 		r.get_cell(index).set_text(l[0])
+
+
+func _on_column_header_move_requested(from: int, to: int) -> void:
+	move_column(from, to)
+	update_columns_label(min(from, to))
+	
+	if not table:
+		return
+	
+	for r in table.get_rows():
+		r.move_cell(from, to)
 
 
 func _on_column_header_minimum_size_changed(column_header: ColumnHeader) -> void:

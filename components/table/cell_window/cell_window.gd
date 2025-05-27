@@ -11,14 +11,10 @@ func _ready() -> void:
 	CellHelper.setup_menu(text_edit.get_menu(), true)
 	
 	if cell:
-		cell.editable = false
+		cell.text_edit.editable = false
 		text_edit.text = cell.get_text()
 		
 		cell.tree_exiting.connect(func(): cell = null)
-
-
-func set_text(text: String) -> void:
-	text_edit.text = text
 
 
 func _on_close_requested() -> void:
@@ -30,7 +26,7 @@ func _on_tree_exiting() -> void:
 		return
 	
 	cell.cell_window = null
-	cell.editable = true
+	cell.text_edit.editable = true
 	cell.grab_focus()
 
 
@@ -38,4 +34,4 @@ func _on_text_edit_text_changed() -> void:
 	if not cell:
 		return
 	
-	cell.set_text(text_edit.text)
+	cell.text_edit.text = text_edit.text

@@ -17,9 +17,33 @@ signal clear_requested
 
 signal delete_requested
 
+signal move_requested(from: RowHeader)
+
 @onready var label: Label = %Label
 
 @onready var row_menu: RowMenu = $RowMenu
+
+
+func _shortcut_input(event: InputEvent) -> void:
+	if event.is_action("ui_cut"):
+		cut_requested.emit()
+	elif event.is_action("ui_copy"):
+		copy_requested.emit()
+	elif event.is_action("ui_paste"):
+		paste_requested.emit()
+
+
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is RowHeader
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if data is RowHeader:
+		move_requested.emit(data)
+
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	return self
 
 
 func update_label(index: int) -> void:

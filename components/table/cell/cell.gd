@@ -26,7 +26,7 @@ func clear() -> void:
 	text_edit.clear()
 	
 	if cell_window:
-		cell_window.set_text(text_edit.text)
+		cell_window.text_edit.text = text_edit.text
 
 
 func focus_window() -> void:
@@ -52,7 +52,7 @@ func set_text(text: String) -> void:
 	text_edit.text = text
 	
 	if cell_window:
-		cell_window.set_text(text_edit.text)
+		cell_window.text_edit.text = text_edit.text
 
 
 func _on_id_pressed(id: int) -> void:

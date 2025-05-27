@@ -4,9 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://bk2g2d2b07n18" path="res://components/table/column_separator/column_separator.tscn" id="2_nn16a"]
 [ext_resource type="PackedScene" uid="uid://c1gqy602so5fd" path="res://components/table/row_menu/row_menu.tscn" id="3_xtn7s"]
 
-[node name="RowHeader" type="HBoxContainer"]
+[node name="RowHeader" type="HBoxContainer" node_paths=PackedStringArray("shortcut_context")]
 offset_right = 72.0
 offset_bottom = 32.0
+focus_mode = 1
+shortcut_context = NodePath(".")
 script = ExtResource("1_20rcx")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]

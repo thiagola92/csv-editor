@@ -148,6 +148,20 @@ func _on_row_header_paste_requested() -> void:
 		break # Stop after first line
 
 
+func _on_row_header_move_requested(from: RowHeader) -> void:
+	if not table:
+		return
+	
+	var parent: Node = from.get_parent()
+	
+	while parent != null and parent is not RowCells:
+		parent = parent.get_parent()
+	
+	if parent:
+		table.move_row(parent.get_index(), get_index())
+		table.update_rows_label(min(parent.get_index(), get_index()))
+
+
 func _on_row_header_minimum_size_changed() -> void:
 	if not table:
 		return

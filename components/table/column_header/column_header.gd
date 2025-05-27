@@ -17,9 +17,33 @@ signal clear_requested(index: int)
 
 signal delete_requested(index: int)
 
+signal move_requested(from: int, to: int)
+
 @export var label: Label
 
 @onready var column_menu: ColumnMenu = $ColumnMenu
+
+
+func _shortcut_input(event: InputEvent) -> void:
+	if event.is_action("ui_cut"):
+		cut_requested.emit(get_index())
+	elif event.is_action("ui_copy"):
+		copy_requested.emit(get_index())
+	elif event.is_action("ui_paste"):
+		paste_requested.emit(get_index())
+
+
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is ColumnHeader
+
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if data is ColumnHeader:
+		move_requested.emit(data.get_index(), get_index())
+
+
+func _get_drag_data(_at_position: Vector2) -> Variant:
+	return self
 
 
 func update_label(index: int) -> void:
