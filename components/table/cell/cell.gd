@@ -1,22 +1,35 @@
 ## Holds one of the values in a CSV line.
+##
+## The separator in it is invisible, the only purpose it's to make 
+## the size match a [ColumnHeader] size.
 class_name Cell
-extends TextEdit
+extends HBoxContainer
 
 
 const CellWindowScene: PackedScene = preload("../cell_window/cell_window.tscn")
 
 var cell_window: CellWindow
 
+var text: String
+
+@onready var text_edit: TextEdit = $TextEdit
+
 
 func _ready() -> void:
-	hide_scroll_grabber()
+	CellHelper.setup_menu(text_edit.get_menu())
+	CellHelper.setup_text_edit(text_edit)
 	
-	CellMenu.setup(get_menu())
-	
-	get_menu().id_pressed.connect(_on_id_pressed)
+	text_edit.get_menu().id_pressed.connect(_on_id_pressed)
 
 
-func focus_cell_window() -> void:
+func clear() -> void:
+	text_edit.clear()
+	
+	if cell_window:
+		cell_window.set_text(text_edit.text)
+
+
+func focus_window() -> void:
 	if cell_window:
 		return cell_window.grab_focus()
 	
@@ -26,55 +39,47 @@ func focus_cell_window() -> void:
 	add_child(cell_window)
 
 
-func hide_scroll_grabber() -> void:
-	get_v_scroll_bar().add_theme_stylebox_override("scroll", StyleBoxEmpty.new())
-	get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", StyleBoxEmpty.new())
-	get_v_scroll_bar().add_theme_stylebox_override("grabber", StyleBoxEmpty.new())
-	get_v_scroll_bar().add_theme_stylebox_override("grabber_highlight", StyleBoxEmpty.new())
-	get_v_scroll_bar().add_theme_stylebox_override("grabber_pressed", StyleBoxEmpty.new())
-	get_h_scroll_bar().add_theme_stylebox_override("scroll", StyleBoxEmpty.new())
-	get_h_scroll_bar().add_theme_stylebox_override("scroll_focus", StyleBoxEmpty.new())
-	get_h_scroll_bar().add_theme_stylebox_override("grabber", StyleBoxEmpty.new())
-	get_h_scroll_bar().add_theme_stylebox_override("grabber_highlight", StyleBoxEmpty.new())
-	get_h_scroll_bar().add_theme_stylebox_override("grabber_pressed", StyleBoxEmpty.new())
+func get_text() -> String:
+	return text_edit.text
 
 
-func reset_scroll_position() -> void:
-	get_v_scroll_bar().value = 0
-	get_h_scroll_bar().value = 0
+func reset_scroll() -> void:
+	text_edit.get_v_scroll_bar().value = 0
+	text_edit.get_h_scroll_bar().value = 0
 
 
-func sync_window_text() -> void:
-	if not cell_window:
-		return
+func set_text(text: String) -> void:
+	text_edit.text = text
 	
-	cell_window.text_edit.text = text
+	if cell_window:
+		cell_window.set_text(text_edit.text)
 
 
 func _on_id_pressed(id: int) -> void:
 	match id:
-		CellMenu.MENU_WINDOW:
-			focus_cell_window()
+		CellHelper.MENU_WINDOW:
+			focus_window()
 
 
-func _on_focus_exited() -> void:
-	reset_scroll_position()
-	editable = false
+func _on_text_edit_focus_exited() -> void:
+	reset_scroll()
+	
+	text_edit.editable = false
 
 
-func _on_gui_input(event: InputEvent) -> void:
+func _on_text_edit_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		_on_gui_mouse_button(event)
+		_on_text_edit_gui_mouse_button(event)
 	elif event is InputEventKey:
-		_on_gui_key(event)
+		_on_text_edit_gui_key(event)
 
 
-func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
+func _on_text_edit_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
 		if not cell_window:
-			editable = true
-			caret_blink = true
+			text_edit.editable = true
+			text_edit.caret_blink = true
 
 
-func _on_gui_key(event: InputEventKey) -> void:
+func _on_text_edit_gui_key(event: InputEventKey) -> void:
 	pass

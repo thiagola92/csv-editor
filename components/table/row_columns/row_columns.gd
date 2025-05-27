@@ -223,7 +223,7 @@ func _on_column_header_copy_requested(index: int) -> void:
 	var lines: Array[Array] = []
 	
 	for r in table.get_rows():
-		var t: String = r.get_cell(index).text
+		var t: String = r.get_cell(index).get_text()
 		
 		lines.append([t])
 	
@@ -264,7 +264,7 @@ func _on_column_header_paste_requested(index: int) -> void:
 		if index >= r.get_cells_count():
 			continue
 		
-		r.get_cell(index).text = l[0]
+		r.get_cell(index).set_text(l[0])
 
 
 func _on_column_header_minimum_size_changed(column_header: ColumnHeader) -> void:

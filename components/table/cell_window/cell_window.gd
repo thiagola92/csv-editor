@@ -8,17 +8,17 @@ var cell: Cell
 
 
 func _ready() -> void:
-	CellMenu.setup(text_edit.get_menu(), true)
+	CellHelper.setup_menu(text_edit.get_menu(), true)
 	
 	if cell:
 		cell.editable = false
-		text_edit.text = cell.text
+		text_edit.text = cell.get_text()
 		
 		cell.tree_exiting.connect(func(): cell = null)
 
 
-func clear() -> void:
-	text_edit.clear()
+func set_text(text: String) -> void:
+	text_edit.text = text
 
 
 func _on_close_requested() -> void:
@@ -38,4 +38,4 @@ func _on_text_edit_text_changed() -> void:
 	if not cell:
 		return
 	
-	cell.text = text_edit.text
+	cell.set_text(text_edit.text)

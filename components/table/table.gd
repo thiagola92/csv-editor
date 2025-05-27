@@ -85,7 +85,7 @@ func copy_rows() -> void:
 		var l: Array[String] = []
 		
 		for c in r.get_cells():
-			l.append(c.text)
+			l.append(c.get_text())
 		
 		lines.append(l)
 	
@@ -103,8 +103,7 @@ func paste_rows() -> void:
 		var r: RowCells = get_row(i)
 		
 		for j in min(l.size(), r.get_cells_count()):
-			r.get_cell(j).text = l[j]
-			r.get_cell(j).sync_window_text()
+			r.get_cell(j).set_text(l[j])
 
 
 func update_rows_label(start: int = 0) -> void:

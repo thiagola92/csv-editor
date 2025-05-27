@@ -85,13 +85,11 @@ func set_cell_width(index: int, x: float) -> void:
 
 func clear_cell(index: int) -> void:
 	get_cell(index).clear()
-	get_cell(index).sync_window_text()
 
 
 func clear_cells() -> void:
 	for c in get_cells():
 		c.clear()
-		c.sync_window_text()
 
 
 ###############################################################
@@ -123,7 +121,7 @@ func _on_row_header_copy_requested() -> void:
 	var values: Array[String] = []
 	
 	for c in get_cells():
-		values.append(c.text)
+		values.append(c.get_text())
 	
 	var text: String = CSVHelper.to_csv([values], true)
 	
@@ -145,8 +143,7 @@ func _on_row_header_paste_requested() -> void:
 	
 	for l in lines:
 		for i in min(l.size(), get_cells_count()):
-			get_cell(i).text = l[i]
-			get_cell(i).sync_window_text()
+			get_cell(i).set_text(l[i])
 		
 		break # Stop after first line
 
