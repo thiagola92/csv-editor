@@ -78,6 +78,35 @@ func clear_rows() -> void:
 		r.clear_cells()
 
 
+func copy_rows() -> void:
+	var lines: Array[Array] = []
+	
+	for r in get_rows():
+		var l: Array[String] = []
+		
+		for c in r.get_cells():
+			l.append(c.text)
+		
+		lines.append(l)
+	
+	var text: String = CSVHelper.to_csv(lines)
+	
+	DisplayServer.clipboard_set(text)
+
+
+func paste_rows() -> void:
+	var text: String = DisplayServer.clipboard_get()
+	var lines: Array[Array] = CSVHelper.from_text(text)
+	
+	for i in min(lines.size(), get_rows_count()):
+		var l: Array = lines[i]
+		var r: RowCells = get_row(i)
+		
+		for j in min(l.size(), r.get_cells_count()):
+			r.get_cell(j).text = l[j]
+			r.get_cell(j).sync_window_text()
+
+
 func update_rows_label(start: int = 0) -> void:
 	for i in range(start, get_rows_count()):
 		get_row(i).update_header_label(i)

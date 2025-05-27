@@ -142,23 +142,29 @@ func _on_empty_header_clear_requested() -> void:
 	if not table:
 		return
 	
-	for r in table.get_rows():
-		r.clear_cells()
+	table.clear_rows()
 
 
 func _on_empty_header_copy_requested() -> void:
 	if not table:
 		return
+	
+	table.copy_rows()
 
 
 func _on_empty_header_cut_requested() -> void:
 	if not table:
 		return
+	
+	table.copy_rows()
+	table.clear_rows()
 
 
 func _on_empty_header_paste_requested() -> void:
 	if not table:
 		return
+	
+	table.paste_rows()
 
 
 func _on_empty_header_minimum_size_changed() -> void:
