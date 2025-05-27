@@ -98,10 +98,6 @@ func get_columns_width(start: int, end: int) -> Array[float]:
 	return widths
 
 
-func set_column_width(index: int, x: float) -> void:
-	get_column(index).custom_minimum_size.x = x
-
-
 func update_columns_label(start: int = 0) -> void:
 	for i in range(start, get_columns_count()):
 		get_column(i).update_label(i)
@@ -223,11 +219,22 @@ func _on_column_header_clear_requested(index: int) -> void:
 func _on_column_header_copy_requested(index: int) -> void:
 	if not table:
 		return
+	
+	var lines: Array[Array] = []
+	
+	for r in table.get_rows():
+		var t: String = r.get_cell(index).text
+		
+		lines.append([t])
+	
+	var text: String = CSVHelper.to_csv(lines)
+	
+	DisplayServer.clipboard_set(text)
 
 
 func _on_column_header_cut_requested(index: int) -> void:
-	if not table:
-		return
+	_on_column_header_copy_requested(index)
+	_on_column_header_clear_requested(index)
 
 
 func _on_column_header_delete_requested(index: int) -> void:
@@ -243,6 +250,21 @@ func _on_column_header_delete_requested(index: int) -> void:
 func _on_column_header_paste_requested(index: int) -> void:
 	if not table:
 		return
+	
+	var text: String = DisplayServer.clipboard_get()
+	var lines: Array[Array] = CSVHelper.from_text(text)
+	
+	for i in min(lines.size(), table.get_rows_count()):
+		var l: Array = lines[i]
+		var r: RowCells = table.get_row(i)
+		
+		if l.is_empty():
+			continue
+		
+		if index >= r.get_cells_count():
+			continue
+		
+		r.get_cell(index).text = l[0]
 
 
 func _on_column_header_minimum_size_changed(column_header: ColumnHeader) -> void:

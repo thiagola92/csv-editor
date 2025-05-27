@@ -94,29 +94,6 @@ func clear_cells() -> void:
 		c.sync_window_text()
 
 
-func copy_cells() -> void:
-	var values: Array[String] = []
-	
-	for c in get_cells():
-		values.append(c.text)
-	
-	var text: String = CSVHelper.to_csv([values], true)
-	
-	DisplayServer.clipboard_set(text)
-
-
-func paste_cells() -> void:
-	var text: String = DisplayServer.clipboard_get()
-	var lines: Array[Array] = CSVHelper.from_text(text, true)
-	
-	for l in lines:
-		for i in min(get_cells_count(), l.size()):
-			get_cell(i).text = l[i]
-			get_cell(i).sync_window_text()
-		
-		break # Stop after first line
-
-
 ###############################################################
 # RowHeader signals
 ###############################################################
@@ -143,11 +120,18 @@ func _on_row_header_clear_requested() -> void:
 
 
 func _on_row_header_copy_requested() -> void:
-	copy_cells()
+	var values: Array[String] = []
+	
+	for c in get_cells():
+		values.append(c.text)
+	
+	var text: String = CSVHelper.to_csv([values], true)
+	
+	DisplayServer.clipboard_set(text)
 
 
 func _on_row_header_cut_requested() -> void:
-	copy_cells()
+	_on_row_header_copy_requested()
 	clear_cells()
 
 
@@ -156,7 +140,15 @@ func _on_row_header_delete_requested() -> void:
 
 
 func _on_row_header_paste_requested() -> void:
-	paste_cells()
+	var text: String = DisplayServer.clipboard_get()
+	var lines: Array[Array] = CSVHelper.from_text(text, true)
+	
+	for l in lines:
+		for i in min(l.size(), get_cells_count()):
+			get_cell(i).text = l[i]
+			get_cell(i).sync_window_text()
+		
+		break # Stop after first line
 
 
 func _on_row_header_minimum_size_changed() -> void:
