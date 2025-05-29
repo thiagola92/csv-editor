@@ -21,17 +21,31 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 @onready var rows: VBoxContainer = $Rows
 
 
+func _shortcut_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_redo"):
+		print("REDO")
+		UndoHelper.undo_redo.redo()
+	elif event.is_action_pressed("ui_undo"):
+		print("UNDO")
+		UndoHelper.undo_redo.undo()
+
+
 ###############################################################
 # Row methods (CORE)
 # add_xxx, get_xxx, move_xxx, remove_xxx and their plural version.
 ###############################################################
 
 
-func add_row(index: int) -> void:
-	var row_cells: RowCells = RowCellsScene.instantiate()
+func add_row(index: int, row_cells: RowCells = null) -> void:
 	var columns_count: int = row_columns.get_columns_count()
 	var columns_width: Array[float] = row_columns.get_columns_width(0, columns_count)
 	
+	if row_cells:
+		rows.add_child(row_cells)
+		rows.move_child(row_cells, index)
+		return
+	
+	row_cells = RowCellsScene.instantiate()
 	row_cells.table = self
 	
 	rows.add_child(row_cells)
@@ -57,6 +71,7 @@ func move_row(from: int, to: int) -> void:
 
 
 func remove_row(index: int) -> void:
+	# NOTE: replace by rows.remove_child(get_row(index))?
 	get_row(index).queue_free()
 
 
@@ -65,8 +80,23 @@ func remove_row(index: int) -> void:
 ###############################################################
 
 
+func get_row_values(index: int) -> Array[String]:
+	return get_row(index).get_cells_values()
+
+
 func get_rows_count() -> int:
 	return rows.get_child_count()
+
+
+func get_rows_values() -> Array[Array]:
+	var lines: Array[Array] = []
+	var line: Array
+	
+	for r in get_rows():
+		line.assign(r.get_row_values())
+		lines.append(line)
+	
+	return lines
 
 
 func clear_row(index: int) -> void:
@@ -79,16 +109,7 @@ func clear_rows() -> void:
 
 
 func copy_rows() -> void:
-	var lines: Array[Array] = []
-	
-	for r in get_rows():
-		var l: Array[String] = []
-		
-		for c in r.get_cells():
-			l.append(c.get_text())
-		
-		lines.append(l)
-	
+	var lines: Array[Array] = get_rows_values()
 	var text: String = CSVHelper.to_csv(lines)
 	
 	DisplayServer.clipboard_set(text)
@@ -97,13 +118,15 @@ func copy_rows() -> void:
 func paste_rows() -> void:
 	var text: String = DisplayServer.clipboard_get()
 	var lines: Array[Array] = CSVHelper.from_text(text)
+	var values: Array[String]
 	
 	for i in min(lines.size(), get_rows_count()):
-		var l: Array = lines[i]
-		var r: RowCells = get_row(i)
-		
-		for j in min(l.size(), r.get_cells_count()):
-			r.get_cell(j).set_text(l[j])
+		values.assign(lines[i])
+		set_row_values(i, values)
+
+
+func set_row_values(index: int, values: Array[String]) -> void:
+	get_row(index).set_cells_values(values)
 
 
 func update_rows_label(start: int = 0) -> void:

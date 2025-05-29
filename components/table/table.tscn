@@ -9,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 2
 script = ExtResource("1_2uxhm")
 
 [node name="RowColumns" parent="." node_paths=PackedStringArray("table") instance=ExtResource("2_i4c8w")]
