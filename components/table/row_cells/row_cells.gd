@@ -196,15 +196,20 @@ func _on_row_header_delete_requested() -> void:
 
 
 func _on_row_header_paste_requested() -> void:
+	var values: Array[String] = get_cells_values()
 	var text: String = DisplayServer.clipboard_get()
 	var lines: Array[Array] = CSVHelper.from_text(text, true)
-	var values: Array[String]
+	var new_values: Array[String]
 	
-	for l in lines:
-		values.assign(l)
-		set_cells_values(values)
-		
-		break # Stop after first line
+	if lines.is_empty():
+		return
+	
+	new_values.assign(lines[0])
+	
+	UndoHelper.undo_redo.create_action("Paste row")
+	UndoHelper.undo_redo.add_do_method(set_cells_values.bind(new_values))
+	UndoHelper.undo_redo.add_undo_method(set_cells_values.bind(values))
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_row_header_move_requested(from: RowHeader) -> void:
@@ -213,12 +218,22 @@ func _on_row_header_move_requested(from: RowHeader) -> void:
 	
 	var parent: Node = from.get_parent()
 	
-	while parent != null and parent is not RowCells:
+	while parent is not RowCells:
 		parent = parent.get_parent()
+		
+		if parent == null:
+			return
 	
-	if parent:
-		table.move_row(parent.get_index(), get_index())
-		table.update_rows_label(min(parent.get_index(), get_index()))
+	var from_index: int = parent.get_index()
+	var to_index: int = get_index()
+	var min_index: int = min(from_index, to_index)
+	
+	UndoHelper.undo_redo.create_action("Move row")
+	UndoHelper.undo_redo.add_do_method(table.move_row.bind(from_index, to_index))
+	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(min_index))
+	UndoHelper.undo_redo.add_undo_method(table.move_row.bind(to_index, from_index))
+	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(min_index))
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_row_header_minimum_size_changed() -> void:
