@@ -146,7 +146,7 @@ func _on_row_header_add_below_requested() -> void:
 	UndoHelper.undo_redo.add_do_method(table.add_row.bind(index, new_row))
 	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(index))
 	UndoHelper.undo_redo.add_do_reference(new_row)
-	UndoHelper.undo_redo.add_undo_method(table.rows.remove_child.bind(new_row))
+	UndoHelper.undo_redo.add_undo_method(table.remove_row.bind(index))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
 	UndoHelper.undo_redo.commit_action(false)
 
@@ -186,11 +186,10 @@ func _on_row_header_delete_requested() -> void:
 	var index: int = get_index()
 	
 	UndoHelper.undo_redo.create_action("Delete row")
-	UndoHelper.undo_redo.add_do_method(table.rows.remove_child.bind(self))
+	UndoHelper.undo_redo.add_do_method(table.remove_row.bind(index))
 	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(index))
-	UndoHelper.undo_redo.add_do_reference(self)
-	UndoHelper.undo_redo.add_undo_method(table.rows.add_child.bind(self))
-	UndoHelper.undo_redo.add_undo_method(table.rows.move_child.bind(self, index))
+	UndoHelper.undo_redo.add_undo_reference(self)
+	UndoHelper.undo_redo.add_undo_method(table.add_row.bind(index, self))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
 	UndoHelper.undo_redo.commit_action()
 

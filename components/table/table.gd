@@ -71,8 +71,7 @@ func move_row(from: int, to: int) -> void:
 
 
 func remove_row(index: int) -> void:
-	# NOTE: replace by rows.remove_child(get_row(index))?
-	get_row(index).queue_free()
+	rows.remove_child(get_row(index))
 
 
 ###############################################################
