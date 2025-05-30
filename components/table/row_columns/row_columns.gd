@@ -41,8 +41,13 @@ func set_header_width(x: float) -> void:
 ###############################################################
 
 
-func add_column(index: int) -> void:
-	var column_header: ColumnHeader = ColumnHeaderScene.instantiate()
+func add_column(index: int, column_header: ColumnHeader = null) -> void:
+	if column_header:
+		columns.add_child(column_header)
+		columns.move_child(column_header, index)
+		return
+	
+	column_header = ColumnHeaderScene.instantiate()
 	
 	columns.add_child(column_header)
 	columns.move_child(column_header, index)
@@ -74,7 +79,7 @@ func move_column(from: int, to: int) -> void:
 
 
 func remove_column(index: int) -> void:
-	get_column(index).queue_free()
+	columns.remove_child(get_column(index))
 
 
 ###############################################################
@@ -84,6 +89,18 @@ func remove_column(index: int) -> void:
 
 func get_column_width(index: int) -> float:
 	return get_column(index).size.x # NOTE: Not the custom_minimum_size.
+
+
+func get_column_values(index: int) -> Array[String]:
+	if not table:
+		return []
+	
+	var values: Array[String]
+	
+	for r in table.get_rows():
+		values.append(r.get_cell_value(index))
+	
+	return values
 
 
 func get_columns_count() -> int:
@@ -97,6 +114,14 @@ func get_columns_width(start: int, end: int) -> Array[float]:
 		widths.append(get_column(i).size.x) # NOTE: Not the custom_minimum_size.
 		
 	return widths
+
+
+func set_column_values(index: int, values: Array[String]) -> void:
+	if not table:
+		return
+	
+	for i in min(values.size(), table.get_rows_count()):
+		table.get_row(i).set_cell_value(index, values[i])
 
 
 func update_columns_label(start: int = 0) -> void:
@@ -189,10 +214,30 @@ func _on_column_header_add_after_requested(index: int) -> void:
 		return
 	
 	var width: float = get_column_width(index)
+	var new_column: ColumnHeader = get_column(index)
+	var new_cells: Array[Cell]
 	
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		new_cells.append(r.get_cell(index))
+	
+	UndoHelper.undo_redo.create_action("Add column after")
+	UndoHelper.undo_redo.add_do_method(add_column.bind(index, new_column))
+	UndoHelper.undo_redo.add_do_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.add_do_reference(new_column)
+	
+	for i in min(new_cells.size(), table.get_rows_count()):
+		var r: RowCells = table.get_row(i)
+		var c: Cell = new_cells[i]
+		
+		UndoHelper.undo_redo.add_do_method(r.add_cell.bind(index, c))
+		UndoHelper.undo_redo.add_do_reference(c)
+		UndoHelper.undo_redo.add_undo_method(r.remove_cell.bind(index))
+	
+	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
+	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.commit_action(false)
 
 
 func _on_column_header_add_before_requested(index: int) -> void:
@@ -203,10 +248,30 @@ func _on_column_header_add_before_requested(index: int) -> void:
 		return
 	
 	var width: float = get_column_width(index)
+	var new_column: ColumnHeader = get_column(index)
+	var new_cells: Array[Cell]
 	
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		new_cells.append(r.get_cell(index))
+	
+	UndoHelper.undo_redo.create_action("Add column before")
+	UndoHelper.undo_redo.add_do_method(add_column.bind(index, new_column))
+	UndoHelper.undo_redo.add_do_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.add_do_reference(new_column)
+	
+	for i in min(new_cells.size(), table.get_rows_count()):
+		var r: RowCells = table.get_row(i)
+		var c: Cell = new_cells[i]
+		
+		UndoHelper.undo_redo.add_do_method(r.add_cell.bind(index, c))
+		UndoHelper.undo_redo.add_do_reference(c)
+		UndoHelper.undo_redo.add_undo_method(r.remove_cell.bind(index))
+	
+	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
+	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.commit_action(false)
 
 
 func _on_column_header_clear_requested(index: int) -> void:

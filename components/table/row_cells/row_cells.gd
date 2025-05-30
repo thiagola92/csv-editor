@@ -40,8 +40,9 @@ func update_header_label(index: int) -> void:
 ###############################################################
 
 
-func add_cell(index: int) -> void:
-	var cell: Cell = CellScene.instantiate()
+func add_cell(index: int, cell: Cell = null) -> void:
+	if not cell:
+		cell = CellScene.instantiate()
 	
 	cells.add_child(cell)
 	cells.move_child(cell, index)
@@ -67,12 +68,16 @@ func move_cell(from: int, to: int) -> void:
 
 
 func remove_cell(index: int) -> void:
-	get_cell(index).queue_free()
+	cells.remove_child(get_cell(index))
 
 
 ###############################################################
 # Cell methods (UTILITY)
 ###############################################################
+
+
+func get_cell_value(index: int) -> String:
+	return get_cell(index).get_text()
 
 
 func get_cells_values() -> Array[String]:
@@ -92,9 +97,13 @@ func set_cell_width(index: int, x: float) -> void:
 	get_cell(index).custom_minimum_size.x = x
 
 
+func set_cell_value(index: int, value: String) -> void:
+	get_cell(index).set_text(value)
+
+
 func set_cells_values(values: Array[String]) -> void:
 	for i in min(values.size(), get_cells_count()):
-		get_cell(i).set_text(values[i])
+		set_cell_value(i, values[i])
 
 
 func clear_cell(index: int) -> void:
