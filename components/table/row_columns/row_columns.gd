@@ -278,8 +278,15 @@ func _on_column_header_clear_requested(index: int) -> void:
 	if not table:
 		return
 	
+	UndoHelper.undo_redo.create_action("Clear column")
+	
 	for r in table.get_rows():
-		r.clear_cell(index)
+		var value: String = r.get_cell_value(index)
+		
+		UndoHelper.undo_redo.add_do_method(r.clear_cell.bind(index))
+		UndoHelper.undo_redo.add_undo_method(r.set_cell_value.bind(index, value))
+	
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_column_header_copy_requested(index: int) -> void:
@@ -289,9 +296,7 @@ func _on_column_header_copy_requested(index: int) -> void:
 	var lines: Array[Array] = []
 	
 	for r in table.get_rows():
-		var t: String = r.get_cell(index).get_text()
-		
-		lines.append([t])
+		lines.append([r.get_cell_value(index)])
 	
 	var text: String = CSVHelper.to_csv(lines)
 	
@@ -307,10 +312,21 @@ func _on_column_header_delete_requested(index: int) -> void:
 	if not table:
 		return
 	
-	remove_column(index)
+	var column_header: ColumnHeader = get_column(index)
+	
+	UndoHelper.undo_redo.create_action("Remove column")
+	UndoHelper.undo_redo.add_do_method(remove_column.bind(index))
 	
 	for r in table.get_rows():
-		r.remove_cell(index)
+		var c: Cell = r.get_cell(index)
+		
+		UndoHelper.undo_redo.add_do_method(r.remove_cell.bind(index))
+		UndoHelper.undo_redo.add_undo_reference(c)
+		UndoHelper.undo_redo.add_undo_method(r.add_cell.bind(index, c))
+	
+	UndoHelper.undo_redo.add_undo_reference(column_header)
+	UndoHelper.undo_redo.add_undo_method(add_column.bind(index, column_header))
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_column_header_paste_requested(index: int) -> void:
@@ -320,28 +336,40 @@ func _on_column_header_paste_requested(index: int) -> void:
 	var text: String = DisplayServer.clipboard_get()
 	var lines: Array[Array] = CSVHelper.from_text(text)
 	
+	UndoHelper.undo_redo.create_action("Paste column")
+	
 	for i in min(lines.size(), table.get_rows_count()):
 		var l: Array = lines[i]
 		var r: RowCells = table.get_row(i)
+		var v: String = r.get_cell_value(index)
 		
+		# User could have an empty line.
 		if l.is_empty():
 			continue
 		
-		if index >= r.get_cells_count():
-			continue
-		
-		r.get_cell(index).set_text(l[0])
+		UndoHelper.undo_redo.add_do_method(r.set_cell_value.bind(index, l[0]))
+		UndoHelper.undo_redo.add_undo_method(r.set_cell_value.bind(index, v))
+	
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_column_header_move_requested(from: int, to: int) -> void:
-	move_column(from, to)
-	update_columns_label(min(from, to))
+	var min_index: int = min(from, to)
+	
+	UndoHelper.undo_redo.create_action("Move column")
+	UndoHelper.undo_redo.add_do_method(move_column.bind(from, to))
+	UndoHelper.undo_redo.add_do_method(update_columns_label.bind(min_index))
+	UndoHelper.undo_redo.add_undo_method(move_column.bind(to, from))
+	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(min_index))
 	
 	if not table:
-		return
+		return UndoHelper.undo_redo.commit_action()
 	
 	for r in table.get_rows():
-		r.move_cell(from, to)
+		UndoHelper.undo_redo.add_do_method(r.move_cell.bind(from, to))
+		UndoHelper.undo_redo.add_undo_method(r.move_cell.bind(to, from))
+	
+	UndoHelper.undo_redo.commit_action()
 
 
 func _on_column_header_minimum_size_changed(column_header: ColumnHeader) -> void:

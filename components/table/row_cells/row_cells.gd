@@ -177,15 +177,8 @@ func _on_row_header_copy_requested() -> void:
 
 
 func _on_row_header_cut_requested() -> void:
-	var values: Array[String] = get_cells_values()
-	var text: String = CSVHelper.to_csv([values], true)
-	
-	DisplayServer.clipboard_set(text)
-	
-	UndoHelper.undo_redo.create_action("Cut row")
-	UndoHelper.undo_redo.add_do_method(clear_cells)
-	UndoHelper.undo_redo.add_undo_method(set_cells_values.bind(values))
-	UndoHelper.undo_redo.commit_action()
+	_on_row_header_copy_requested()
+	_on_row_header_clear_requested()
 
 
 func _on_row_header_delete_requested() -> void:

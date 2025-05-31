@@ -25,11 +25,11 @@ signal move_requested(from: int, to: int)
 
 
 func _shortcut_input(event: InputEvent) -> void:
-	if event.is_action("ui_cut"):
+	if event.is_action_pressed("ui_cut"):
 		cut_requested.emit(get_index())
-	elif event.is_action("ui_copy"):
+	elif event.is_action_pressed("ui_copy"):
 		copy_requested.emit(get_index())
-	elif event.is_action("ui_paste"):
+	elif event.is_action_pressed("ui_paste"):
 		paste_requested.emit(get_index())
 
 
