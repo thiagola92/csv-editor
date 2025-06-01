@@ -144,10 +144,30 @@ func _on_empty_header_add_column_requested() -> void:
 		return
 	
 	var width: float = get_column_width(index)
+	var new_column: ColumnHeader = get_column(index)
+	var new_cells: Array[Cell]
 	
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		new_cells.append(r.get_cell(index))
+	
+	UndoHelper.undo_redo.create_action("Add column")
+	UndoHelper.undo_redo.add_do_method(add_column.bind(index, new_column))
+	UndoHelper.undo_redo.add_do_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.add_do_reference(new_column)
+	
+	for i in min(new_cells.size(), table.get_rows_count()):
+		var r: RowCells = table.get_row(i)
+		var c: Cell = new_cells[i]
+		
+		UndoHelper.undo_redo.add_do_method(r.add_cell.bind(index, c))
+		UndoHelper.undo_redo.add_do_reference(c)
+		UndoHelper.undo_redo.add_undo_method(r.remove_cell.bind(index))
+	
+	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
+	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	UndoHelper.undo_redo.commit_action(false)
 
 
 func _on_empty_header_add_row_requested() -> void:
@@ -158,14 +178,30 @@ func _on_empty_header_add_row_requested() -> void:
 	
 	table.add_row(index)
 	table.update_rows_label(index)
+	
+	var new_row: RowCells = table.get_row(index)
+	
+	UndoHelper.undo_redo.create_action("Add row")
+	UndoHelper.undo_redo.add_do_method(table.add_row.bind(index, new_row))
+	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(index))
+	UndoHelper.undo_redo.add_do_reference(new_row)
+	UndoHelper.undo_redo.add_undo_method(table.remove_row.bind(index))
+	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
+	UndoHelper.undo_redo.commit_action(false)
 
 
 func _on_empty_header_clear_requested() -> void:
 	if not table:
 		return
 	
-	table.clear_rows()
+	UndoHelper.undo_redo.create_action("Clear table")
+	
+	for r in table.get_rows():
+		for c in r.get_cells():
+			UndoHelper.undo_redo.add_do_method(c.clear)
+			UndoHelper.undo_redo.add_undo_method(c.set_text.bind(c.get_text()))
 
+	UndoHelper.undo_redo.commit_action()
 
 func _on_empty_header_copy_requested() -> void:
 	if not table:
@@ -175,11 +211,8 @@ func _on_empty_header_copy_requested() -> void:
 
 
 func _on_empty_header_cut_requested() -> void:
-	if not table:
-		return
-	
-	table.copy_rows()
-	table.clear_rows()
+	_on_empty_header_copy_requested()
+	_on_empty_header_clear_requested()
 
 
 func _on_empty_header_paste_requested() -> void:

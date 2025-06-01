@@ -23,10 +23,8 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 
 func _shortcut_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_redo"):
-		print("REDO")
 		UndoHelper.undo_redo.redo()
 	elif event.is_action_pressed("ui_undo"):
-		print("UNDO")
 		UndoHelper.undo_redo.undo()
 
 
@@ -89,11 +87,11 @@ func get_rows_count() -> int:
 
 func get_rows_values() -> Array[Array]:
 	var lines: Array[Array] = []
-	var line: Array
 	
 	for r in get_rows():
-		line.assign(r.get_row_values())
-		lines.append(line)
+		var l: Array
+		l.assign(r.get_cells_values())
+		lines.append(l)
 	
 	return lines
 
