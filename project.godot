@@ -24,6 +24,7 @@ window/per_pixel_transparency/allowed=true
 
 folder_colors={
 "res://components/": "green",
+"res://export/": "yellow",
 "res://static/": "red"
 }
 
