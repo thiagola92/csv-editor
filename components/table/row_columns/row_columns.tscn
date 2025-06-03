@@ -35,3 +35,5 @@ row = NodePath("../Row")
 [connection signal="cut_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_cut_requested"]
 [connection signal="minimum_size_changed" from="Row/EmptyHeader" to="." method="_on_empty_header_minimum_size_changed"]
 [connection signal="paste_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_paste_requested"]
+[connection signal="redo_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_redo_requested"]
+[connection signal="undo_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_undo_requested"]

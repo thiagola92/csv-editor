@@ -24,6 +24,7 @@ layout_mode = 2
 column = NodePath("..")
 
 [node name="EmptyMenu" parent="." instance=ExtResource("3_4t6hq")]
+auto_translate_mode = 2
 visible = false
 unfocusable = false
 

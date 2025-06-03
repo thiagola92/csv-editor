@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgu7k4tkq7bt6"]
+
+[ext_resource type="Texture2D" uid="uid://bbp1re1itn8fe" path="res://components/top_bar/File.svg" id="1_d2vwo"]
+[ext_resource type="Texture2D" uid="uid://dqoem576ljpcy" path="res://components/top_bar/Save.svg" id="2_sn7k1"]
+
+[node name="TopBar" type="MenuBar"]
+
+[node name="File" type="PopupMenu" parent="."]
+auto_translate_mode = 2
+oversampling_override = 1.0
+auto_translate = false
+item_count = 3
+item_0/text = "Open..."
+item_0/icon = ExtResource("1_d2vwo")
+item_0/id = 0
+item_1/text = "Save"
+item_1/icon = ExtResource("2_sn7k1")
+item_1/id = 1
+item_2/text = "Save as..."
+item_2/icon = ExtResource("2_sn7k1")
+item_2/id = 2

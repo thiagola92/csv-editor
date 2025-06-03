@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bho6y3fvnxca0"]
+[gd_scene load_steps=9 format=3 uid="uid://bho6y3fvnxca0"]
 
 [ext_resource type="Script" uid="uid://b442vncoon8yi" path="res://components/table/empty_menu/empty_menu.gd" id="1_j13ux"]
 [ext_resource type="Texture2D" uid="uid://d1p8evlec7ibb" path="res://components/table/empty_menu/ActionAdd.svg" id="1_ulf66"]
@@ -6,12 +6,17 @@
 [ext_resource type="Texture2D" uid="uid://dvqnxa2cahnkg" path="res://components/table/empty_menu/ActionCut.svg" id="2_devse"]
 [ext_resource type="Texture2D" uid="uid://dhbk3uuiqw02m" path="res://components/table/empty_menu/ActionPaste.svg" id="3_i1un8"]
 [ext_resource type="Texture2D" uid="uid://bfv3t53bswplx" path="res://components/table/empty_menu/ActionClear.svg" id="5_buygb"]
+[ext_resource type="Texture2D" uid="uid://1x1hj1hb1qfg" path="res://components/table/empty_menu/ActionUndo.svg" id="6_i1un8"]
+[ext_resource type="Texture2D" uid="uid://cct5u86eylfok" path="res://components/table/empty_menu/ActionRedo.svg" id="7_buygb"]
 
 [node name="EmptyMenu" type="PopupMenu"]
-size = Vector2i(129, 174)
+auto_translate_mode = 2
+oversampling_override = 1.0
+size = Vector2i(129, 232)
 visible = true
 unfocusable = true
-item_count = 7
+auto_translate = false
+item_count = 10
 item_0/text = "Cut"
 item_0/icon = ExtResource("2_devse")
 item_0/id = 0
@@ -32,4 +37,12 @@ item_5/id = 4
 item_6/text = "Clear"
 item_6/icon = ExtResource("5_buygb")
 item_6/id = 5
+item_7/id = 99
+item_7/separator = true
+item_8/text = "Undo"
+item_8/icon = ExtResource("6_i1un8")
+item_8/id = 6
+item_9/text = "Redo"
+item_9/icon = ExtResource("7_buygb")
+item_9/id = 7
 script = ExtResource("1_j13ux")
