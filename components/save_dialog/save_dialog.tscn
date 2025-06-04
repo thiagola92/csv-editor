@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvwjtah8xp8lx"]
+
+[ext_resource type="Script" uid="uid://54p5yym8c3bn" path="res://components/save_dialog/save_dialog.gd" id="1_fa56n"]
+
+[node name="SaveDialog" type="FileDialog"]
+title = "Save CSV"
+initial_position = 2
+auto_translate = false
+mode_overrides_title = false
+access = 2
+filters = PackedStringArray("*.csv")
+script = ExtResource("1_fa56n")
+
+[connection signal="file_selected" from="." to="." method="_on_file_selected"]

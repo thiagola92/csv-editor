@@ -1,15 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgu7k4tkq7bt6"]
+[gd_scene load_steps=4 format=3 uid="uid://dgu7k4tkq7bt6"]
 
 [ext_resource type="Texture2D" uid="uid://bbp1re1itn8fe" path="res://components/top_bar/File.svg" id="1_d2vwo"]
+[ext_resource type="Script" uid="uid://1miudfn1s2me" path="res://components/top_bar/top_bar.gd" id="1_tchrx"]
 [ext_resource type="Texture2D" uid="uid://dqoem576ljpcy" path="res://components/top_bar/Save.svg" id="2_sn7k1"]
 
 [node name="TopBar" type="MenuBar"]
+script = ExtResource("1_tchrx")
 
-[node name="File" type="PopupMenu" parent="."]
+[node name="FileMenu" type="PopupMenu" parent="."]
 auto_translate_mode = 2
 oversampling_override = 1.0
+title = "File"
 auto_translate = false
-item_count = 3
+item_count = 5
 item_0/text = "Open..."
 item_0/icon = ExtResource("1_d2vwo")
 item_0/id = 0
@@ -19,3 +22,9 @@ item_1/id = 1
 item_2/text = "Save as..."
 item_2/icon = ExtResource("2_sn7k1")
 item_2/id = 2
+item_3/id = 99
+item_3/separator = true
+item_4/text = "Quit"
+item_4/id = 3
+
+[connection signal="id_pressed" from="FileMenu" to="." method="_on_file_id_pressed"]

@@ -11,7 +11,7 @@ static func to_csv(lines: Array[Array], oneline: bool = false) -> String:
 	var file := FileAccess.create_temp(FileAccess.READ_WRITE, "csv-line", "csv")
 	
 	if not file:
-		push_warning("Failed to open file (error %s)" % FileAccess.get_open_error())
+		push_warning("Failed to open temp file (error %s)" % FileAccess.get_open_error())
 		return ""
 	
 	for l in lines:
@@ -22,7 +22,7 @@ static func to_csv(lines: Array[Array], oneline: bool = false) -> String:
 	
 	file.seek(0)
 	
-	var text: String = file.get_file_as_string(file.get_path())
+	var text: String = FileAccess.get_file_as_string(file.get_path())
 	
 	# Return without the newline at the end.
 	return text.substr(0, text.length() - 1)
@@ -36,7 +36,7 @@ static func from_text(text: String, oneline: bool = false) -> Array[Array]:
 	var file := FileAccess.create_temp(FileAccess.READ_WRITE, "csv-line", "csv")
 	
 	if not file:
-		push_warning("Failed to open file (error %s)" % FileAccess.get_open_error())
+		push_warning("Failed to open temp file (error %s)" % FileAccess.get_open_error())
 		return []
 	
 	file.store_string(text)

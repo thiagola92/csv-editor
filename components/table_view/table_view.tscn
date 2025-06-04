@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq8nucs408o8x"]
+
+[ext_resource type="PackedScene" uid="uid://bxtx3okenfjel" path="res://components/table_view/table/table.tscn" id="1_4qevc"]
+[ext_resource type="Script" uid="uid://d0woqcn2j0rky" path="res://components/table_view/table_view.gd" id="1_ljacj"]
+
+[node name="TableView" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_ljacj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Table" parent="HBoxContainer/ScrollContainer" instance=ExtResource("1_4qevc")]
+unique_name_in_owner = true
+layout_mode = 2
