@@ -7,6 +7,7 @@
 [node name="EmptyHeader" type="HBoxContainer"]
 offset_right = 72.0
 offset_bottom = 32.0
+focus_mode = 3
 script = ExtResource("1_54am1")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -24,7 +25,6 @@ layout_mode = 2
 column = NodePath("..")
 
 [node name="EmptyMenu" parent="." instance=ExtResource("3_4t6hq")]
-auto_translate_mode = 2
 visible = false
 unfocusable = false
 

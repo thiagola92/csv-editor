@@ -24,7 +24,7 @@ const MENU_WINDOW = TextEdit.MENU_MAX + 1
 
 
 static func setup_menu(menu: PopupMenu, is_window: bool = false) -> void:
-	# Remove items that should be global to all cells.
+	# Remove items that should be UndoRedo to all cells.
 	menu.remove_item(menu.get_item_index(TextEdit.MENU_SUBMENU_TEXT_DIR))
 	menu.remove_item(menu.get_item_index(TextEdit.MENU_DISPLAY_UCC))
 	menu.remove_item(menu.get_item_index(TextEdit.MENU_SUBMENU_INSERT_UCC))

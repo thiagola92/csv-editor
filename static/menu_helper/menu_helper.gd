@@ -1,5 +1,5 @@
 class_name MenuHelper
-extends Node
+extends RefCounted
 
 
 static func add_shortcut(menu: PopupMenu, id: int, action: String) -> void:

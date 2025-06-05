@@ -7,7 +7,7 @@
 [node name="RowHeader" type="HBoxContainer" node_paths=PackedStringArray("shortcut_context")]
 offset_right = 72.0
 offset_bottom = 32.0
-focus_mode = 1
+focus_mode = 3
 shortcut_context = NodePath(".")
 script = ExtResource("1_20rcx")
 
@@ -33,6 +33,7 @@ column = NodePath("..")
 [node name="RowMenu" parent="." instance=ExtResource("3_xtn7s")]
 visible = false
 unfocusable = false
+auto_translate = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="id_pressed" from="RowMenu" to="." method="_on_row_menu_id_pressed"]

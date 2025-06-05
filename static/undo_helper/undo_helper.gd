@@ -1,5 +1,5 @@
 class_name UndoHelper
-extends Node
+extends RefCounted
 
 
 static var undo_redo := UndoRedo.new()

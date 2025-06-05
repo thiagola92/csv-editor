@@ -232,14 +232,6 @@ func _on_empty_header_minimum_size_changed() -> void:
 		r.set_header_width(width)
 
 
-func _on_empty_header_redo_requested() -> void:
-	UndoHelper.undo_redo.redo()
-
-
-func _on_empty_header_undo_requested() -> void:
-	UndoHelper.undo_redo.undo()
-
-
 ###############################################################
 # ColumnHeader signals
 ###############################################################

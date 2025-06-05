@@ -7,7 +7,7 @@
 [node name="ColumnHeader" type="HBoxContainer" node_paths=PackedStringArray("shortcut_context", "label")]
 offset_right = 72.0
 offset_bottom = 32.0
-focus_mode = 1
+focus_mode = 3
 shortcut_context = NodePath(".")
 script = ExtResource("1_ip8xt")
 label = NodePath("CenterContainer/Label")
@@ -29,6 +29,7 @@ layout_mode = 2
 column = NodePath("..")
 
 [node name="ColumnMenu" parent="." instance=ExtResource("3_web75")]
+auto_translate_mode = 2
 visible = false
 unfocusable = false
 auto_translate = false

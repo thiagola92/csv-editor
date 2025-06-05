@@ -15,11 +15,16 @@ signal add_row_requested
 
 signal clear_requested
 
-signal undo_requested
-
-signal redo_requested
-
 @onready var empty_menu: EmptyMenu = $EmptyMenu
+
+
+func _shortcut_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cut"):
+		cut_requested.emit(get_index())
+	elif event.is_action_pressed("ui_copy"):
+		copy_requested.emit(get_index())
+	elif event.is_action_pressed("ui_paste"):
+		paste_requested.emit(get_index())
 
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -52,6 +57,6 @@ func _on_empty_menu_id_pressed(id: int) -> void:
 		EmptyMenu.MENU_CLEAR:
 			clear_requested.emit()
 		EmptyMenu.MENU_UNDO:
-			undo_requested.emit()
+			UndoHelper.undo_redo.undo()
 		EmptyMenu.MENU_REDO:
-			redo_requested.emit()
+			UndoHelper.undo_redo.redo()

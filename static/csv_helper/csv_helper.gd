@@ -1,5 +1,5 @@
 class_name CSVHelper
-extends Node
+extends RefCounted
 
 
 ## Receives [param lines], an [Array] of [Array][lb][String][rb],
