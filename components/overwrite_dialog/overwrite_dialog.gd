@@ -1,8 +1,12 @@
-class_name VerificationDialog
+class_name OverwriteDialog
 extends ConfirmationDialog
 
 
 signal response(confirmed: bool)
+
+
+func _ready() -> void:
+	get_ok_button().modulate = Color.html("#c64600")
 
 
 func _on_canceled() -> void:

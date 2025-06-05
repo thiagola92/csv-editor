@@ -6,4 +6,10 @@ extends FileDialog
 
 
 func _on_file_selected(path: String) -> void:
-	print(path)
+	var file := FileAccess.open(path, FileAccess.READ)
+	
+	if not file:
+		push_warning("Failed to open file (error: %s)" % FileAccess.get_open_error())
+		return
+	
+	table_view.set_table_values([])

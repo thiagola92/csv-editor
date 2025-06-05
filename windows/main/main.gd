@@ -1,13 +1,13 @@
 extends Panel
 
 
-@onready var table_view = %TableView
+@onready var table_view: TableView = %TableView
 
 @onready var open_dialog: OpenDialog = $OpenDialog
 
 @onready var save_dialog: SaveDialog = $SaveDialog
 
-@onready var verification_dialog: VerificationDialog = $VerificationDialog
+@onready var overwrite_dialog: OverwriteDialog = $OverwriteDialog
 
 
 func _ready() -> void:
@@ -31,12 +31,12 @@ func _on_top_bar_save_requested() -> void:
 	if not FileHelper.current_file:
 		return _on_top_bar_save_as_requested()
 	
-	verification_dialog.title = ""
-	verification_dialog.dialog_text = ""
-	verification_dialog.reset_size()
-	verification_dialog.popup_centered()
+	if FileHelper.was_modified():
+		overwrite_dialog.popup_centered()
+		
+		var accepted = await overwrite_dialog.response
+		
+		if not accepted:
+			return
 	
-	var confirmed = await verification_dialog.response
-	
-	if not confirmed:
-		return
+	FileHelper.set_content(table_view.get_table_values())

@@ -7,6 +7,21 @@ static var current_file: String
 static var last_modification: int
 
 
+static func set_content(values: Array[Array]) -> void:
+	if not current_file:
+		return
+	
+	var content: String = CSVHelper.to_csv(values)
+	var file := FileAccess.open(current_file, FileAccess.WRITE)
+	
+	if not file:
+		push_warning("Failed to save file (error %s)" % FileAccess.get_open_error())
+		return
+	
+	file.store_string(content)
+	last_modification = FileAccess.get_modified_time(current_file)
+
+
 static func was_modified() -> bool:
 	if not current_file:
 		return false
