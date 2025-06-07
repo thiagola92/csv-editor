@@ -124,6 +124,17 @@ func set_column_values(index: int, values: Array[String]) -> void:
 		table.get_row(i).set_cell_value(index, values[i])
 
 
+func set_columns_quantity(quantity: int) -> void:
+	var diff: int = quantity - table.get_rows_count()
+	
+	if diff >= 0:
+		for i in diff:
+			add_column(-1)
+	else:
+		for i in abs(diff):
+			remove_column(-1)
+
+
 func update_columns_label(start: int = 0) -> void:
 	for i in range(start, get_columns_count()):
 		get_column(i).update_label(i)

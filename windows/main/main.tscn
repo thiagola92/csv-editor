@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://hvq6ahoo0qlt"]
+[gd_scene load_steps=10 format=3 uid="uid://hvq6ahoo0qlt"]
 
 [ext_resource type="Theme" uid="uid://lmmuc10u2h8y" path="res://theme.tres" id="1_4xf0a"]
 [ext_resource type="PackedScene" uid="uid://dgu7k4tkq7bt6" path="res://components/top_bar/top_bar.tscn" id="1_f5jsn"]
 [ext_resource type="Script" uid="uid://bp4f8unh25y2r" path="res://windows/main/main.gd" id="1_n4hx8"]
 [ext_resource type="PackedScene" uid="uid://dq8nucs408o8x" path="res://components/table_view/table_view.tscn" id="2_n4hx8"]
-[ext_resource type="PackedScene" uid="uid://4w5ytux42uhw" path="res://components/open_dialog/open_dialog.tscn" id="4_plsdc"]
-[ext_resource type="PackedScene" uid="uid://bvwjtah8xp8lx" path="res://components/save_dialog/save_dialog.tscn" id="5_t14ra"]
-[ext_resource type="PackedScene" uid="uid://dp8xpaom0oaoe" path="res://components/overwrite_dialog/overwrite_dialog.tscn" id="7_4xf0a"]
+[ext_resource type="PackedScene" uid="uid://4w5ytux42uhw" path="res://windows/open_dialog/open_dialog.tscn" id="4_plsdc"]
+[ext_resource type="PackedScene" uid="uid://bvwjtah8xp8lx" path="res://windows/save_dialog/save_dialog.tscn" id="5_t14ra"]
+[ext_resource type="PackedScene" uid="uid://dp8xpaom0oaoe" path="res://windows/overwrite_dialog/overwrite_dialog.tscn" id="7_4xf0a"]
+[ext_resource type="PackedScene" uid="uid://cr22q4bvxhlde" path="res://windows/discard_dialog/discard_dialog.tscn" id="8_jr0yn"]
+[ext_resource type="PackedScene" uid="uid://cykgssytmthxr" path="res://windows/about_window/about_window.tscn" id="9_hsn1q"]
 
 [node name="Main" type="Panel"]
 anchors_preset = 15
@@ -46,11 +48,20 @@ layout_mode = 2
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
 [node name="SaveDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("5_t14ra")]
-auto_translate_mode = 2
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
-[node name="OverwriteDialog" parent="." instance=ExtResource("7_4xf0a")]
+[node name="OverwriteDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("7_4xf0a")]
+table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
+[node name="DiscardDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("8_jr0yn")]
+auto_translate_mode = 2
+dialog_text = "There is changes not saved.
+Continuing now will discard any changes made until now."
+table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
+
+[node name="AboutWindow" parent="." instance=ExtResource("9_hsn1q")]
+
+[connection signal="about_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_about_requested"]
 [connection signal="open_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_open_requested"]
 [connection signal="quit_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_quit_requested"]
 [connection signal="save_as_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_save_as_requested"]

@@ -14,6 +14,7 @@ config/name="CSV Editor"
 run/main_scene="uid://hvq6ahoo0qlt"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 run/low_processor_mode=true
+boot_splash/image="uid://qy7v0df6t5wh"
 config/icon="res://icon.svg"
 
 [display]
@@ -25,7 +26,8 @@ window/per_pixel_transparency/allowed=true
 
 folder_colors={
 "res://components/": "green",
-"res://export/": "yellow",
+"res://export/": "orange",
+"res://others/": "yellow",
 "res://static/": "red",
 "res://windows/": "blue"
 }

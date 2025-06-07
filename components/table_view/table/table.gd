@@ -135,6 +135,17 @@ func set_rows_values(values: Array[Array]) -> void:
 		r.set_cells_values(l)
 
 
+func set_rows_quantity(quantity: int) -> void:
+	var diff: int = quantity - get_rows_count()
+	
+	if diff >= 0:
+		for i in diff:
+			add_row(-1)
+	else:
+		for i in abs(diff):
+			remove_row(-1)
+
+
 func update_rows_label(start: int = 0) -> void:
 	for i in range(start, get_rows_count()):
 		get_row(i).update_header_label(i)

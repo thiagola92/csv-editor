@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr22q4bvxhlde"]
+
+[ext_resource type="Script" uid="uid://ddt6m87mcgbbd" path="res://windows/discard_dialog/discard_dialog.gd" id="1_h3dcc"]
+
+[node name="DiscardDialog" type="ConfirmationDialog"]
+oversampling_override = 1.0
+title = "Discard CSV"
+initial_position = 4
+size = Vector2i(417, 100)
+auto_translate = false
+dialog_text = "Continuing now will discard any changes made until now."
+script = ExtResource("1_h3dcc")
+
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

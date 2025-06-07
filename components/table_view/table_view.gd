@@ -1,3 +1,20 @@
+## Improve the visualization of the table.
+##
+## [codeblock]
+## |           column viewer            |
+## | ---------------------------------- |
+## |            |                       |
+## |            |                       |
+## | row viewer |         table         |
+## |            |                       |
+## |            |                       |
+## | ---------------------------------- |
+## [/codeblock]
+## [br]
+## - column viewer: [ColumnViewer][br]
+## - row viewer: [RowViewer][br]
+## - table: [Table][br]
+## [br]
 class_name TableView
 extends VBoxContainer
 
@@ -23,17 +40,10 @@ func recreate_table() -> void:
 
 
 func set_table_size(rows: int, columns: int) -> void:
-	var rows_diff: int = rows - table.get_rows_count()
-	var columns_diff: int = columns - table.row_columns.get_columns_count()
-	var row_op: Callable = table.add_row if rows_diff > 0 else table.remove_row
-	var colmun_op: Callable = table.row_columns.add_column if columns_diff > 0 \
-		else table.row_columns.remove_column
-	
-	for r in abs(rows_diff):
-		row_op.call(-1)
-	
-	for c in abs(columns_diff):
-		colmun_op.call(-1)
+	table.row_columns.set_columns_quantity(columns)
+	table.row_columns.update_columns_label()
+	table.set_rows_quantity(rows)
+	table.update_rows_label()
 
 
 func set_table_values(values: Array[Array]) -> void:
