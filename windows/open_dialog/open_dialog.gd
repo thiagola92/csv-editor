@@ -7,6 +7,7 @@ extends FileDialog
 
 func _on_file_selected(path: String) -> void:
 	FileHelper.current_file = path
+	FileHelper.last_modification = FileAccess.get_modified_time(path)
 	
 	var lines: Array[Array] = FileHelper.get_content()
 	var rows: int = lines.size()
@@ -17,4 +18,5 @@ func _on_file_selected(path: String) -> void:
 	
 	table_view.set_table_size(rows, columns)
 	table_view.set_table_values(lines)
+	
 	UndoHelper.undo_redo.clear_history()

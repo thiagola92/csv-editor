@@ -34,7 +34,7 @@ func get_table_values() -> Array[Array]:
 
 
 func recreate_table() -> void:
-	scroll_container.remove_child(table)
+	table.queue_free()
 	table = Table.new()
 	scroll_container.add_child(table)
 

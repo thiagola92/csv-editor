@@ -14,6 +14,13 @@ extends Panel
 @onready var discard_dialog: DiscardDialog = $DiscardDialog
 
 
+func _ready() -> void:
+	var args: Dictionary = CLIHelper.parse()
+	
+	if args.get("file"):
+		open_dialog._on_file_selected(args["file"])
+
+
 func _on_top_bar_about_requested() -> void:
 	about_window.popup_centered()
 
