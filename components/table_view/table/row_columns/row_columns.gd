@@ -87,6 +87,12 @@ func remove_column(index: int) -> void:
 ###############################################################
 
 
+## Focus a column header.[br]
+## Used to make cells lose focus and store their state in UndoRedo.
+func focus_column(index: int) -> void:
+	get_column(index).grab_focus()
+
+
 func get_column_width(index: int) -> float:
 	return get_column(index).size.x # NOTE: Not the custom_minimum_size.
 
@@ -322,6 +328,8 @@ func _on_column_header_add_before_requested(index: int) -> void:
 
 
 func _on_column_header_clear_requested(index: int) -> void:
+	focus_column(index)
+	
 	if not table:
 		return
 	
@@ -337,6 +345,8 @@ func _on_column_header_clear_requested(index: int) -> void:
 
 
 func _on_column_header_copy_requested(index: int) -> void:
+	focus_column(index)
+	
 	if not table:
 		return
 	
@@ -356,6 +366,8 @@ func _on_column_header_cut_requested(index: int) -> void:
 
 
 func _on_column_header_delete_requested(index: int) -> void:
+	focus_column(index)
+	
 	if not table:
 		return
 	
@@ -377,6 +389,8 @@ func _on_column_header_delete_requested(index: int) -> void:
 
 
 func _on_column_header_paste_requested(index: int) -> void:
+	focus_column(index)
+	
 	if not table:
 		return
 	

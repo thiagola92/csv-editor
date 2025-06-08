@@ -165,6 +165,9 @@ func _on_row_header_add_below_requested() -> void:
 
 
 func _on_row_header_clear_requested() -> void:
+	if table:
+		table.focus_row(get_index())
+	
 	var values: Array[String] = get_cells_values()
 	
 	UndoHelper.undo_redo.create_action("Clear row")
@@ -174,6 +177,9 @@ func _on_row_header_clear_requested() -> void:
 
 
 func _on_row_header_copy_requested() -> void:
+	if table:
+		table.focus_row(get_index())
+	
 	var values: Array[String] = get_cells_values()
 	var text: String = CSVHelper.to_csv([values], true)
 	
@@ -189,7 +195,10 @@ func _on_row_header_delete_requested() -> void:
 	if not table:
 		return queue_free()
 	
+	
 	var index: int = get_index()
+	
+	table.focus_row(index)
 	
 	UndoHelper.undo_redo.create_action("Delete row")
 	UndoHelper.undo_redo.add_do_method(table.remove_row.bind(index))
@@ -201,6 +210,9 @@ func _on_row_header_delete_requested() -> void:
 
 
 func _on_row_header_paste_requested() -> void:
+	if table:
+		table.focus_row(get_index())
+	
 	var values: Array[String] = get_cells_values()
 	var text: String = DisplayServer.clipboard_get()
 	var lines: Array[Array] = CSVHelper.from_text(text, true)
@@ -221,15 +233,11 @@ func _on_row_header_move_requested(from: RowHeader) -> void:
 	if not table:
 		return
 	
-	var parent: Node = from.get_parent()
+	var from_index: int = table.find_row_index(from)
 	
-	while parent is not RowCells:
-		parent = parent.get_parent()
-		
-		if parent == null:
-			return
+	if from_index == -1:
+		return
 	
-	var from_index: int = parent.get_index()
 	var to_index: int = get_index()
 	var min_index: int = min(from_index, to_index)
 	

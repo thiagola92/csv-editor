@@ -23,10 +23,8 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 
 func _shortcut_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_redo"):
-		print("REDO")
 		UndoHelper.undo_redo.redo()
 	elif event.is_action_pressed("ui_undo"):
-		print("UNDO")
 		UndoHelper.undo_redo.undo()
 
 
@@ -81,6 +79,17 @@ func remove_row(index: int) -> void:
 ###############################################################
 
 
+## Find out the row index from a node.
+func find_row_index(node: Node) -> int:
+	while node is not RowCells:
+		node = node.get_parent()
+		
+		if node == null:
+			return -1
+	
+	return node.get_index()
+
+
 func get_row_values(index: int) -> Array[String]:
 	return get_row(index).get_cells_values()
 
@@ -114,6 +123,12 @@ func copy_rows() -> void:
 	var text: String = CSVHelper.to_csv(lines)
 	
 	DisplayServer.clipboard_set(text)
+
+
+## Focus a row header.[br]
+## Used to make cells lose focus and store their state in UndoRedo.
+func focus_row(index: int) -> void:
+	get_row(index).row_header.grab_focus()
 
 
 func paste_rows() -> void:
