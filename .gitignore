@@ -4,8 +4,8 @@
 
 # Project
 theme.tres
-/export/linux
-/export/windows
+/export/linux/*
+/export/windows/*
 !/export/linux/.gitkeep
 !/export/windows/.gitkeep
 
