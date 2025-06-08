@@ -23,8 +23,10 @@ const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 
 func _shortcut_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_redo"):
+		print("REDO")
 		UndoHelper.undo_redo.redo()
 	elif event.is_action_pressed("ui_undo"):
+		print("UNDO")
 		UndoHelper.undo_redo.undo()
 
 
@@ -35,7 +37,8 @@ func _shortcut_input(event: InputEvent) -> void:
 
 
 func add_row(index: int, row_cells: RowCells = null) -> void:
-	var columns_count: int = row_columns.get_columns_count()
+	var columns_headers: Array[ColumnHeader] = row_columns.get_columns()
+	var columns_count: int = columns_headers.size()
 	var columns_width: Array[float] = row_columns.get_columns_width(0, columns_count)
 	
 	if row_cells:
@@ -52,6 +55,7 @@ func add_row(index: int, row_cells: RowCells = null) -> void:
 	
 	for i in columns_count:
 		row_cells.set_cell_width(i, columns_width[i])
+		row_cells.set_cell_control(i, columns_headers[i])
 
 
 func get_row(index: int) -> RowCells:

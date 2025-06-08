@@ -24,9 +24,9 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColumnSeparator" parent="." node_paths=PackedStringArray("column") instance=ExtResource("2_qe5fa")]
+[node name="ColumnSeparator" parent="." node_paths=PackedStringArray("control") instance=ExtResource("2_qe5fa")]
 layout_mode = 2
-column = NodePath("..")
+control = NodePath("..")
 
 [node name="ColumnMenu" parent="." instance=ExtResource("3_web75")]
 auto_translate_mode = 2

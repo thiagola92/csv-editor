@@ -15,6 +15,8 @@ var undo_text: String
 
 @onready var text_edit: TextEdit = $TextEdit
 
+@onready var column_separator: ColumnSeparator = $ColumnSeparator
+
 
 func _ready() -> void:
 	CellHelper.setup_menu(text_edit.get_menu())
@@ -58,6 +60,10 @@ func set_text(text: String) -> void:
 		cell_window.text_edit.text = text_edit.text
 
 
+func set_control(control: Control) -> void:
+	column_separator.control = control
+
+
 func _on_id_pressed(id: int) -> void:
 	match id:
 		CellHelper.MENU_WINDOW:
@@ -68,6 +74,7 @@ func _on_text_edit_focus_exited() -> void:
 	reset_scroll()
 	
 	text_edit.editable = false
+	text_edit.shortcut_keys_enabled = false
 	
 	if text_edit.text == undo_text:
 		return
@@ -100,8 +107,11 @@ func _on_text_edit_gui_mouse_double_click(_event: InputEventMouseButton) -> void
 	
 	text_edit.editable = true
 	text_edit.caret_blink = true
+	text_edit.shortcut_keys_enabled = true
 	undo_text = text_edit.text
 
 
-func _on_text_edit_gui_key(event: InputEventKey) -> void:
-	pass
+func _on_text_edit_gui_key(_event: InputEventKey) -> void:
+	if text_edit.editable:
+		return
+	

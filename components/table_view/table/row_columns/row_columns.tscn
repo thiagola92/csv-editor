@@ -24,9 +24,9 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RowSeparator" parent="." node_paths=PackedStringArray("row") instance=ExtResource("3_p4cuy")]
+[node name="RowSeparator" parent="." node_paths=PackedStringArray("control") instance=ExtResource("3_p4cuy")]
 layout_mode = 2
-row = NodePath("../Row")
+control = NodePath("../Row")
 
 [connection signal="add_column_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_column_requested"]
 [connection signal="add_row_requested" from="Row/EmptyHeader" to="." method="_on_empty_header_add_row_requested"]

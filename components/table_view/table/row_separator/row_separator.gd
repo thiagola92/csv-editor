@@ -4,7 +4,7 @@ extends HSeparator
 
 
 ## Set to the Control that you want the custom_minimum_size changed.
-@export var row: Control
+@export var control: Control
 
 var initial_y_position: float
 
@@ -25,21 +25,21 @@ func _process(_delta: float) -> void:
 func resize_row() -> void:
 	var distance: float = get_global_mouse_position().y - initial_y_position
 	
-	if row:
-		row.custom_minimum_size.y = initial_y_size + distance
+	if control:
+		control.custom_minimum_size.y = initial_y_size + distance
 		
-		await row.item_rect_changed
-		row.minimum_size_changed.emit()
+		await control.item_rect_changed
+		control.minimum_size_changed.emit()
 
 
 func reset_row() -> void:
 	set_process(false)
 	
-	if row:
-		row.custom_minimum_size.y = 0
+	if control:
+		control.custom_minimum_size.y = 0
 		
-		await row.item_rect_changed
-		row.minimum_size_changed.emit()
+		await control.item_rect_changed
+		control.minimum_size_changed.emit()
 
 
 func follow_mouse() -> void:
@@ -47,8 +47,8 @@ func follow_mouse() -> void:
 	
 	initial_y_position = get_global_mouse_position().y
 	
-	if row:
-		initial_y_size = row.size.y
+	if control:
+		initial_y_size = control.size.y
 
 
 func _on_gui_input(event: InputEvent) -> void:

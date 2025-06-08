@@ -93,6 +93,10 @@ func get_cells_count() -> int:
 	return cells.get_child_count()
 
 
+func set_cell_control(index: int, control: Control) -> void:
+	get_cell(index).set_control(control)
+
+
 func set_cell_width(index: int, x: float) -> void:
 	get_cell(index).custom_minimum_size.x = x
 

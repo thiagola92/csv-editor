@@ -161,6 +161,7 @@ func _on_empty_header_add_column_requested() -> void:
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		r.set_cell_control(index, new_column)
 		new_cells.append(r.get_cell(index))
 	
 	UndoHelper.undo_redo.create_action("Add column")
@@ -264,6 +265,7 @@ func _on_column_header_add_after_requested(index: int) -> void:
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		r.set_cell_control(index, new_column)
 		new_cells.append(r.get_cell(index))
 	
 	UndoHelper.undo_redo.create_action("Add column after")
@@ -298,6 +300,7 @@ func _on_column_header_add_before_requested(index: int) -> void:
 	for r in table.get_rows():
 		r.add_cell(index)
 		r.set_cell_width(index, width)
+		r.set_cell_control(index, new_column)
 		new_cells.append(r.get_cell(index))
 	
 	UndoHelper.undo_redo.create_action("Add column before")

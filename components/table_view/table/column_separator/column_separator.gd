@@ -4,7 +4,7 @@ extends VSeparator
 
 
 ## Set to the Control that you want the custom_minimum_size changed.
-@export var column: Control
+@export var control: Control
 
 var initial_x_position: float
 
@@ -25,21 +25,21 @@ func _process(_delta: float) -> void:
 func resize_column() -> void:
 	var distance: float = get_global_mouse_position().x - initial_x_position
 	
-	if column:
-		column.custom_minimum_size.x = initial_x_size + distance
+	if control:
+		control.custom_minimum_size.x = initial_x_size + distance
 		
-		await column.item_rect_changed
-		column.minimum_size_changed.emit()
+		await control.item_rect_changed
+		control.minimum_size_changed.emit()
 
 
 func reset_column() -> void:
 	set_process(false)
 	
-	if column:
-		column.custom_minimum_size.x = 0
+	if control:
+		control.custom_minimum_size.x = 0
 		
-		await column.item_rect_changed
-		column.minimum_size_changed.emit()
+		await control.item_rect_changed
+		control.minimum_size_changed.emit()
 
 
 func follow_mouse() -> void:
@@ -47,8 +47,8 @@ func follow_mouse() -> void:
 	
 	initial_x_position = get_global_mouse_position().x
 	
-	if column:
-		initial_x_size = column.size.x
+	if control:
+		initial_x_size = control.size.x
 
 
 func _on_gui_input(event: InputEvent) -> void:
