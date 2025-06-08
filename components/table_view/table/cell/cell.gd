@@ -60,6 +60,8 @@ func set_text(text: String) -> void:
 		cell_window.text_edit.text = text_edit.text
 
 
+## Set the [member ColumnSeparator.control] for this cell.
+## Which should be the [ColumnHeader] of this cell.
 func set_control(control: Control) -> void:
 	column_separator.control = control
 
