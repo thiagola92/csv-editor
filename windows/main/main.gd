@@ -19,6 +19,8 @@ func _ready() -> void:
 	
 	if args.get("file"):
 		open_dialog._on_file_selected(args["file"])
+	else:
+		table_view.set_table_size(100, 100)
 
 
 func _on_top_bar_about_requested() -> void:
@@ -51,3 +53,7 @@ func _on_top_bar_save_requested() -> void:
 		return overwrite_dialog.popup_centered()
 	
 	FileHelper.set_content(table_view.get_table_values())
+
+
+func _on_tree_exiting() -> void:
+	UndoHelper.undo_redo.clear_history()

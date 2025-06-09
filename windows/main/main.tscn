@@ -61,6 +61,7 @@ table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
 [node name="AboutWindow" parent="." instance=ExtResource("9_hsn1q")]
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="about_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_about_requested"]
 [connection signal="open_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_open_requested"]
 [connection signal="quit_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_quit_requested"]

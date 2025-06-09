@@ -141,6 +141,12 @@ func _on_row_header_add_above_requested() -> void:
 	UndoHelper.undo_redo.add_do_reference(new_row)
 	UndoHelper.undo_redo.add_undo_method(table.rows.remove_child.bind(new_row))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -161,6 +167,12 @@ func _on_row_header_add_below_requested() -> void:
 	UndoHelper.undo_redo.add_do_reference(new_row)
 	UndoHelper.undo_redo.add_undo_method(table.remove_row.bind(index))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -206,6 +218,11 @@ func _on_row_header_delete_requested() -> void:
 	UndoHelper.undo_redo.add_undo_reference(self)
 	UndoHelper.undo_redo.add_undo_method(table.add_row.bind(index, self))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
+	
+	if table.table_view:
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action()
 
 

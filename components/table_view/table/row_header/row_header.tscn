@@ -26,11 +26,12 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColumnSeparator" parent="." node_paths=PackedStringArray("column") instance=ExtResource("2_nn16a")]
+[node name="ColumnSeparator" parent="." node_paths=PackedStringArray("control") instance=ExtResource("2_nn16a")]
 layout_mode = 2
-column = NodePath("..")
+control = NodePath("..")
 
 [node name="RowMenu" parent="." instance=ExtResource("3_xtn7s")]
+auto_translate_mode = 2
 visible = false
 unfocusable = false
 auto_translate = false

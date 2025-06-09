@@ -185,6 +185,12 @@ func _on_empty_header_add_column_requested() -> void:
 	
 	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
 	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -205,6 +211,12 @@ func _on_empty_header_add_row_requested() -> void:
 	UndoHelper.undo_redo.add_do_reference(new_row)
 	UndoHelper.undo_redo.add_undo_method(table.remove_row.bind(index))
 	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -289,6 +301,12 @@ func _on_column_header_add_after_requested(index: int) -> void:
 	
 	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
 	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -324,6 +342,12 @@ func _on_column_header_add_before_requested(index: int) -> void:
 	
 	UndoHelper.undo_redo.add_undo_method(remove_column.bind(index))
 	UndoHelper.undo_redo.add_undo_method(update_columns_label.bind(index))
+	
+	if table.table_view:
+		table.table_view.refresh_counters()
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -385,6 +409,11 @@ func _on_column_header_delete_requested(index: int) -> void:
 	
 	UndoHelper.undo_redo.add_undo_reference(column_header)
 	UndoHelper.undo_redo.add_undo_method(add_column.bind(index, column_header))
+	
+	if table.table_view:
+		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
+		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
+	
 	UndoHelper.undo_redo.commit_action()
 
 

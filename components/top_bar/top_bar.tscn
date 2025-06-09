@@ -26,7 +26,7 @@ item_2/id = 2
 item_3/id = 99
 item_3/separator = true
 item_4/text = "Quit"
-item_4/id = 4
+item_4/id = 3
 
 [node name="HelpMenu" type="PopupMenu" parent="."]
 auto_translate_mode = 2
@@ -37,5 +37,5 @@ item_0/text = "About"
 item_0/icon = ExtResource("4_d2vwo")
 item_0/id = 53
 
-[connection signal="index_pressed" from="FileMenu" to="." method="_on_file_menu_index_pressed"]
+[connection signal="id_pressed" from="FileMenu" to="." method="_on_file_menu_id_pressed"]
 [connection signal="id_pressed" from="HelpMenu" to="." method="_on_help_menu_id_pressed"]

@@ -23,6 +23,10 @@ extends VBoxContainer
 
 @onready var table: Table = %Table
 
+@onready var rows_counter: SpinBox = %RowsCounter
+
+@onready var columns_counter: SpinBox = %ColumnsCounter
+
 
 ###############################################################
 # Table methods (UTILITY)
@@ -35,7 +39,10 @@ func get_table_values() -> Array[Array]:
 
 func recreate_table() -> void:
 	table.queue_free()
+	
 	table = Table.new()
+	table.table_view = self
+	
 	scroll_container.add_child(table)
 
 
@@ -48,3 +55,13 @@ func set_table_size(rows: int, columns: int) -> void:
 
 func set_table_values(values: Array[Array]) -> void:
 	table.set_rows_values(values)
+
+
+###############################################################
+# Counters methods (UTILITY)
+###############################################################
+
+
+func refresh_counters() -> void:
+	rows_counter.value = table.get_rows_count()
+	columns_counter.value = table.row_columns.get_columns_count()

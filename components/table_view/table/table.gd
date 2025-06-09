@@ -16,6 +16,8 @@ extends VBoxContainer
 
 const RowCellsScene: PackedScene = preload("row_cells/row_cells.tscn")
 
+@export var table_view: TableView
+
 @onready var row_columns: RowColumns = $RowColumns
 
 @onready var rows: VBoxContainer = $Rows
@@ -155,7 +157,8 @@ func set_rows_values(values: Array[Array]) -> void:
 
 
 func set_rows_quantity(quantity: int) -> void:
-	var diff: int = quantity - get_rows_count()
+	var rows_count: int = get_rows_count()
+	var diff: int = quantity - rows_count
 	
 	if diff >= 0:
 		for i in diff:

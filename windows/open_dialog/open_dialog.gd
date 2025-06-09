@@ -16,7 +16,9 @@ func _on_file_selected(path: String) -> void:
 	for l in lines:
 		columns = max(columns, l.size())
 	
+	table_view.recreate_table()
 	table_view.set_table_size(rows, columns)
 	table_view.set_table_values(lines)
+	table_view.refresh_counters()
 	
 	UndoHelper.undo_redo.clear_history()

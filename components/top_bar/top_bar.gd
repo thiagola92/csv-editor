@@ -31,8 +31,7 @@ func _ready() -> void:
 	MenuHelper.add_shortcut(file_menu, MENU_QUIT, "input/ui_quit")
 
 
-func _on_file_menu_index_pressed(id: int) -> void:
-	print(id)
+func _on_file_menu_id_pressed(id: int) -> void:
 	match id:
 		MENU_OPEN:
 			open_requested.emit()
