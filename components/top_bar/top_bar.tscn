@@ -26,7 +26,7 @@ item_2/id = 2
 item_3/id = 99
 item_3/separator = true
 item_4/text = "Quit"
-item_4/id = 3
+item_4/id = 4
 
 [node name="HelpMenu" type="PopupMenu" parent="."]
 auto_translate_mode = 2

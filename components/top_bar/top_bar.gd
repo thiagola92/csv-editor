@@ -32,6 +32,7 @@ func _ready() -> void:
 
 
 func _on_file_menu_index_pressed(id: int) -> void:
+	print(id)
 	match id:
 		MENU_OPEN:
 			open_requested.emit()
