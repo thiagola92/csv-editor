@@ -20,7 +20,9 @@ func _ready() -> void:
 	if args.get("file"):
 		open_dialog._on_file_selected(args["file"])
 	else:
-		table_view.set_table_size(100, 100)
+		table_view.set_table_size(10, 10)
+	
+	UndoHelper.undo_redo.max_steps = 50
 
 
 func _on_top_bar_about_requested() -> void:
