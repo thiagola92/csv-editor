@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://hvq6ahoo0qlt"]
+[gd_scene load_steps=9 format=3 uid="uid://hvq6ahoo0qlt"]
 
-[ext_resource type="Theme" uid="uid://lmmuc10u2h8y" path="res://theme.tres" id="1_4xf0a"]
 [ext_resource type="PackedScene" uid="uid://dgu7k4tkq7bt6" path="res://components/top_bar/top_bar.tscn" id="1_f5jsn"]
 [ext_resource type="Script" uid="uid://bp4f8unh25y2r" path="res://windows/main/main.gd" id="1_n4hx8"]
 [ext_resource type="PackedScene" uid="uid://dq8nucs408o8x" path="res://components/table_view/table_view.tscn" id="2_n4hx8"]
@@ -16,7 +15,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_4xf0a")
 script = ExtResource("1_n4hx8")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

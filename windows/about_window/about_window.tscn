@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://cykgssytmthxr"]
+[gd_scene load_steps=2 format=3 uid="uid://cykgssytmthxr"]
 
-[ext_resource type="Theme" uid="uid://lmmuc10u2h8y" path="res://theme.tres" id="1_dmiyx"]
 [ext_resource type="Script" uid="uid://bwtmopt04symb" path="res://windows/about_window/about_window.gd" id="2_7oavk"]
 
 [node name="AboutWindow" type="Window"]
@@ -13,7 +12,6 @@ wrap_controls = true
 transient = true
 exclusive = true
 auto_translate = false
-theme = ExtResource("1_dmiyx")
 script = ExtResource("2_7oavk")
 
 [node name="Panel" type="Panel" parent="."]

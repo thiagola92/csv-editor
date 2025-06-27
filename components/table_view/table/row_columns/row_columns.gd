@@ -131,7 +131,8 @@ func set_column_values(index: int, values: Array[String]) -> void:
 
 
 func set_columns_quantity(quantity: int) -> void:
-	var diff: int = quantity - table.get_rows_count()
+	var columns_count: int = get_columns_count()
+	var diff: int = quantity - columns_count
 	
 	if diff >= 0:
 		for i in diff:

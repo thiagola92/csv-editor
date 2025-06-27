@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcph7ke0efjqm"]
+
+[ext_resource type="Script" uid="uid://bhqxpf3fvodth" path="res://windows/resize_dialog/resize_dialog.gd" id="1_4dt7p"]
+
+[node name="ResizeDialog" type="ConfirmationDialog"]
+auto_translate_mode = 2
+oversampling_override = 1.0
+title = "Resize table"
+initial_position = 4
+size = Vector2i(362, 100)
+auto_translate = false
+ok_button_text = "Continue"
+dialog_text = "Resizing will delete rows/columns. Continue?"
+script = ExtResource("1_4dt7p")
+
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]

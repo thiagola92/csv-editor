@@ -105,6 +105,18 @@ func set_cell_value(index: int, value: String) -> void:
 	get_cell(index).set_text(value)
 
 
+func set_cells_quantity(quantity: int) -> void:
+	var cells_count: int = get_cells_count()
+	var diff: int = quantity - cells_count
+	
+	if diff >= 0:
+		for i in diff:
+			add_cell(-1)
+	else:
+		for i in abs(diff):
+			remove_cell(-1)
+
+
 func set_cells_values(values: Array[String]) -> void:
 	for i in min(values.size(), get_cells_count()):
 		set_cell_value(i, values[i])

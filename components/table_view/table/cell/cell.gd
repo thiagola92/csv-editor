@@ -10,8 +10,8 @@ const CellWindowScene: PackedScene = preload("../cell_window/cell_window.tscn")
 
 var cell_window: CellWindow
 
-## Text to be registered in UndoRedo when leaving focus.
-var undo_text: String
+# Text to be registered in UndoRedo when leaving focus.
+var previous_text: String
 
 @onready var text_edit: TextEdit = $TextEdit
 
@@ -74,11 +74,12 @@ func _on_id_pressed(id: int) -> void:
 
 func _on_text_edit_focus_exited() -> void:
 	reset_scroll()
+	text_edit.clear_undo_history()
 	
 	text_edit.editable = false
 	text_edit.shortcut_keys_enabled = false
 	
-	if text_edit.text == undo_text:
+	if text_edit.text == previous_text:
 		return
 	
 	if cell_window:
@@ -86,7 +87,7 @@ func _on_text_edit_focus_exited() -> void:
 	
 	UndoHelper.undo_redo.create_action("Change cell")
 	UndoHelper.undo_redo.add_do_property(text_edit, "text", text_edit.text)
-	UndoHelper.undo_redo.add_undo_property(text_edit, "text", undo_text)
+	UndoHelper.undo_redo.add_undo_property(text_edit, "text", previous_text)
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -110,7 +111,7 @@ func _on_text_edit_gui_mouse_double_click(_event: InputEventMouseButton) -> void
 	text_edit.editable = true
 	text_edit.caret_blink = true
 	text_edit.shortcut_keys_enabled = true
-	undo_text = text_edit.text
+	previous_text = text_edit.text
 
 
 func _on_text_edit_gui_key(_event: InputEventKey) -> void:
