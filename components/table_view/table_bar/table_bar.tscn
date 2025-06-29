@@ -51,5 +51,6 @@ value = 10.0
 allow_greater = true
 alignment = 1
 
-[node name="ResizeDialog" parent="." node_paths=PackedStringArray("table_bar") instance=ExtResource("2_3c8y5")]
-table_bar = NodePath("..")
+[node name="ResizeDialog" parent="." instance=ExtResource("2_3c8y5")]
+
+[connection signal="confirmed" from="ResizeDialog" to="." method="_on_resize_dialog_confirmed"]

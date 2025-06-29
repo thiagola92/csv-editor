@@ -12,5 +12,3 @@ auto_translate = false
 ok_button_text = "Continue"
 dialog_text = "Resizing will delete rows/columns. Continue?"
 script = ExtResource("1_4dt7p")
-
-[connection signal="confirmed" from="." to="." method="_on_confirmed"]
