@@ -80,6 +80,20 @@ func get_cell_value(index: int) -> String:
 	return get_cell(index).get_text()
 
 
+## Get the cells that will be target if quantity change to [param]quantity[/parma].[br]
+## Helps with undoing & redoing [method set_cells_quantity].
+func get_cells_target(quantity: int) -> Array[Cell]:
+	var cells_count: int = get_cells_count()
+	var diff: int = cells_count - quantity
+	var target: Array[Cell] = []
+	
+	if diff > 0:
+		for i in range(quantity, cells_count):
+			target.append(get_cell(i))
+	
+	return target
+
+
 func get_cells_values() -> Array[String]:
 	var texts: Array[String] = []
 	
@@ -105,14 +119,21 @@ func set_cell_value(index: int, value: String) -> void:
 	get_cell(index).set_text(value)
 
 
-func set_cells_quantity(quantity: int) -> void:
+## Set cells quantity to [param quantity].[br]
+## When adding cells, will attempt to use [param using] if it size match 
+## the [b]exactly[/b] difference in cells.
+func set_cells_quantity(quantity: int, using: Array[Cell] = []) -> void:
 	var cells_count: int = get_cells_count()
 	var diff: int = quantity - cells_count
 	
-	if diff >= 0:
-		for i in diff:
-			add_cell(-1)
-	else:
+	if diff > 0:
+		if using.size() == diff:
+			for c in using:
+				add_cell(-1, c)
+		else:
+			for i in diff:
+				add_cell(-1)
+	elif diff < 0:
 		for i in abs(diff):
 			remove_cell(-1)
 

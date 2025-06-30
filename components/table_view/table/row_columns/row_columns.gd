@@ -113,6 +113,20 @@ func get_columns_count() -> int:
 	return columns.get_child_count()
 
 
+## Get the columns that will be target if quantity change to [param]quantity[/parma].[br]
+## Helps with undoing & redoing [method set_columns_quantity].
+func get_columns_target(quantity: int) -> Array[ColumnHeader]:
+	var columns_count: int = get_columns_count()
+	var diff: int = columns_count - quantity
+	var target: Array[ColumnHeader] = []
+	
+	if diff > 0:
+		for i in range(quantity, columns_count):
+			target.append(get_column(i))
+	
+	return target
+
+
 func get_columns_width(start: int, end: int) -> Array[float]:
 	var widths: Array[float] = []
 	
@@ -130,14 +144,21 @@ func set_column_values(index: int, values: Array[String]) -> void:
 		table.get_row(i).set_cell_value(index, values[i])
 
 
-func set_columns_quantity(quantity: int) -> void:
+## Set columns quantity to [param quantity].[br]
+## When adding columns, will attempt to use [param using] if it size match 
+## the [b]exactly[/b] difference in columns.
+func set_columns_quantity(quantity: int, using: Array[ColumnHeader] = []) -> void:
 	var columns_count: int = get_columns_count()
 	var diff: int = quantity - columns_count
 	
-	if diff >= 0:
-		for i in diff:
-			add_column(-1)
-	else:
+	if diff > 0:
+		if using.size() == diff:
+			for c in using:
+				add_column(-1, c)
+		else:
+			for i in diff:
+				add_column(-1)
+	elif diff < 0:
 		for i in abs(diff):
 			remove_column(-1)
 

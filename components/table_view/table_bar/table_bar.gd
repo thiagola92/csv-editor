@@ -4,9 +4,9 @@ extends HBoxContainer
 
 @export var table_view: TableView
 
-@onready var rows_counter: SpinBox = $RowsCounter
-
 @onready var columns_counter: SpinBox = $ColumnsCounter
+
+@onready var rows_counter: SpinBox = $RowsCounter
 
 @onready var resize_dialog: ResizeDialog = $ResizeDialog
 
@@ -54,8 +54,24 @@ func _on_resize_dialog_confirmed() -> void:
 	var current_columns: int = table_view.table.row_columns.get_columns_count()
 	var new_rows: int = int(rows_counter.value)
 	var new_columns: int = int(columns_counter.value)
+	var targets: TableView.TableTargets = table_view.get_table_targets(new_rows, new_columns)
 	
 	UndoHelper.undo_redo.create_action("Resize table")
+	
+	for c in targets.columns:
+		UndoHelper.undo_redo.add_undo_reference(c)
+	
+	for a in targets.cells:
+		for c in a:
+			UndoHelper.undo_redo.add_undo_reference(c)
+	
+	for r in targets.rows:
+		UndoHelper.undo_redo.add_undo_reference(r)
+	
+	UndoHelper.undo_redo.add_do_property(rows_counter, "value", new_rows)
+	UndoHelper.undo_redo.add_do_property(columns_counter, "value", new_columns)
 	UndoHelper.undo_redo.add_do_method(table_view.set_table_size.bind(new_rows, new_columns))
-	UndoHelper.undo_redo.add_undo_method(table_view.set_table_size.bind(current_rows, current_columns))
+	UndoHelper.undo_redo.add_undo_property(rows_counter, "value", current_rows)
+	UndoHelper.undo_redo.add_undo_property(columns_counter, "value", current_columns)
+	UndoHelper.undo_redo.add_undo_method(table_view.set_table_size.bind(current_rows, current_columns, targets))
 	UndoHelper.undo_redo.commit_action()

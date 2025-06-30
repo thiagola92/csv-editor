@@ -37,6 +37,24 @@ func get_table_values() -> Array[Array]:
 	return table.get_rows_values()
 
 
+## Get the everything that will be target if table is resized to
+## [param]rows[/parma] and [param]columns[/parma].[br]
+## Helps with undoing & redoing [method set_table_size].
+func get_table_targets(rows: int, columns: int) -> TableTargets:
+	var targets: TableTargets = TableTargets.new()
+	
+	targets.columns = table.row_columns.get_columns_target(columns)
+	
+	for r in table.get_rows():
+		var array_cells: Array
+		array_cells.assign(r.get_cells_target(columns))
+		targets.cells.append(array_cells)
+	
+	targets.rows = table.get_rows_target(rows)
+	
+	return targets
+
+
 func recreate_table() -> void:
 	table.queue_free()
 	
@@ -46,19 +64,32 @@ func recreate_table() -> void:
 	scroll_container.add_child(table)
 
 
-func set_table_size(rows: int, columns: int) -> void:
-	table.row_columns.set_columns_quantity(columns)
+func set_table_size(rows: int, columns: int, using: TableTargets = TableTargets.new()) -> void:
+	table.row_columns.set_columns_quantity(columns, using.columns)
 	table.row_columns.update_columns_label()
 	
-	for r in table.get_rows():
-		r.set_cells_quantity(columns)
+	if using.cells.size() == table.get_rows_count():
+		for i in table.get_rows_count():
+			var r = table.get_row(i)
+			var a: Array[Cell] = []
+			a.assign(using.cells[i])
+			r.set_cells_quantity(columns, a)
+	else:
+		for r in table.get_rows():
+			r.set_cells_quantity(columns)
 	
-	table.set_rows_quantity(rows)
+	table.set_rows_quantity(rows, using.rows)
 	table.update_rows_label()
 
 
 func set_table_values(values: Array[Array]) -> void:
 	table.set_rows_values(values)
+
+
+class TableTargets:
+	var columns: Array[ColumnHeader] = []
+	var cells: Array[Array] = []
+	var rows: Array[RowCells] = []
 
 
 ###############################################################

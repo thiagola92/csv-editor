@@ -3,16 +3,42 @@
 [ext_resource type="Script" uid="uid://bdgq7xykl3ygn" path="res://components/table_view/table_bar/table_bar.gd" id="1_d4y3e"]
 [ext_resource type="PackedScene" uid="uid://dcph7ke0efjqm" path="res://windows/resize_dialog/resize_dialog.tscn" id="2_3c8y5"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_ljacj"]
-
 [sub_resource type="ImageTexture" id="ImageTexture_ikxe7"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_ljacj"]
 
 [node name="TableBar" type="HBoxContainer"]
 script = ExtResource("1_d4y3e")
 
-[node name="RowsCounter" type="SpinBox" parent="."]
+[node name="ColumnsCounter" type="SpinBox" parent="."]
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "Columns"
+theme_override_constants/buttons_width = 0
+theme_override_icons/up_disabled = SubResource("ImageTexture_ikxe7")
+theme_override_icons/down = SubResource("ImageTexture_ikxe7")
+theme_override_icons/down_hover = SubResource("ImageTexture_ikxe7")
+theme_override_icons/down_pressed = SubResource("ImageTexture_ikxe7")
+theme_override_icons/down_disabled = SubResource("ImageTexture_ikxe7")
+theme_override_icons/up_pressed = SubResource("ImageTexture_ikxe7")
+theme_override_icons/up_hover = SubResource("ImageTexture_ikxe7")
+theme_override_icons/up = SubResource("ImageTexture_ikxe7")
+theme_override_icons/updown = SubResource("ImageTexture_ikxe7")
+value = 10.0
+allow_greater = true
+alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RowsCounter" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Rows"
 theme_override_constants/buttons_width = 0
 theme_override_icons/up_disabled = SubResource("ImageTexture_ljacj")
 theme_override_icons/down = SubResource("ImageTexture_ljacj")
@@ -25,29 +51,6 @@ theme_override_icons/up = SubResource("ImageTexture_ljacj")
 theme_override_icons/updown = SubResource("ImageTexture_ljacj")
 value = 10.0
 rounded = true
-allow_greater = true
-alignment = 1
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 2
-size_flags_vertical = 1
-text = "x"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColumnsCounter" type="SpinBox" parent="."]
-layout_mode = 2
-theme_override_constants/buttons_width = 0
-theme_override_icons/up_disabled = SubResource("ImageTexture_ikxe7")
-theme_override_icons/down = SubResource("ImageTexture_ikxe7")
-theme_override_icons/down_hover = SubResource("ImageTexture_ikxe7")
-theme_override_icons/down_pressed = SubResource("ImageTexture_ikxe7")
-theme_override_icons/down_disabled = SubResource("ImageTexture_ikxe7")
-theme_override_icons/up_pressed = SubResource("ImageTexture_ikxe7")
-theme_override_icons/up_hover = SubResource("ImageTexture_ikxe7")
-theme_override_icons/up = SubResource("ImageTexture_ikxe7")
-theme_override_icons/updown = SubResource("ImageTexture_ikxe7")
-value = 10.0
 allow_greater = true
 alignment = 1
 

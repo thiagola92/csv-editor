@@ -81,36 +81,6 @@ func remove_row(index: int) -> void:
 ###############################################################
 
 
-## Find out the row index from a node.
-func find_row_index(node: Node) -> int:
-	while node is not RowCells:
-		node = node.get_parent()
-		
-		if node == null:
-			return -1
-	
-	return node.get_index()
-
-
-func get_row_values(index: int) -> Array[String]:
-	return get_row(index).get_cells_values()
-
-
-func get_rows_count() -> int:
-	return rows.get_child_count()
-
-
-func get_rows_values() -> Array[Array]:
-	var lines: Array[Array] = []
-	
-	for r in get_rows():
-		var l: Array
-		l.assign(r.get_cells_values())
-		lines.append(l)
-	
-	return lines
-
-
 func clear_row(index: int) -> void:
 	get_row(index).clear_cells()
 
@@ -127,10 +97,54 @@ func copy_rows() -> void:
 	DisplayServer.clipboard_set(text)
 
 
+## Find out the row index from a node.
+func find_row_index(node: Node) -> int:
+	while node is not RowCells:
+		node = node.get_parent()
+		
+		if node == null:
+			return -1
+	
+	return node.get_index()
+
+
 ## Focus a row header.[br]
 ## Used to make cells lose focus and store their state in UndoRedo.
 func focus_row(index: int) -> void:
 	get_row(index).row_header.grab_focus()
+
+
+func get_row_values(index: int) -> Array[String]:
+	return get_row(index).get_cells_values()
+
+
+func get_rows_count() -> int:
+	return rows.get_child_count()
+
+
+## Get the rows that will be target if quantity change to [param]quantity[/parma].[br]
+## Helps with undoing & redoing [method set_rows_quantity].
+func get_rows_target(quantity: int) -> Array[RowCells]:
+	var rows_count: int = get_rows_count()
+	var diff: int = rows_count - quantity
+	var target: Array[RowCells] = []
+	
+	if diff > 0:
+		for i in range(quantity, rows_count):
+			target.append(get_row(i))
+	
+	return target
+
+
+func get_rows_values() -> Array[Array]:
+	var lines: Array[Array] = []
+	
+	for r in get_rows():
+		var l: Array
+		l.assign(r.get_cells_values())
+		lines.append(l)
+	
+	return lines
 
 
 func paste_rows() -> void:
@@ -156,14 +170,21 @@ func set_rows_values(values: Array[Array]) -> void:
 		r.set_cells_values(l)
 
 
-func set_rows_quantity(quantity: int) -> void:
+## Set rows quantity to [param quantity].[br]
+## When adding rows, will attempt to use [param using] if it size match 
+## the [b]exactly[/b] difference in rows.
+func set_rows_quantity(quantity: int, using: Array[RowCells] = []) -> void:
 	var rows_count: int = get_rows_count()
 	var diff: int = quantity - rows_count
 	
-	if diff >= 0:
-		for i in diff:
-			add_row(-1)
-	else:
+	if diff > 0:
+		if using.size() == diff:
+			for r in using:
+				add_row(-1, r)
+		else:
+			for i in diff:
+				add_row(-1)
+	elif diff < 0:
 		for i in abs(diff):
 			remove_row(-1)
 
