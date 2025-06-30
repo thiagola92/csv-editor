@@ -114,7 +114,8 @@ func get_columns_count() -> int:
 
 
 ## Get the columns that will be target if quantity change to [param]quantity[/parma].[br]
-## Helps with undoing & redoing [method set_columns_quantity].
+## [br]
+## [b]Note[/b]: Helps with undoing & redoing [method set_columns_quantity].
 func get_columns_target(quantity: int) -> Array[ColumnHeader]:
 	var columns_count: int = get_columns_count()
 	var diff: int = columns_count - quantity

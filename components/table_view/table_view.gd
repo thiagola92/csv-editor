@@ -38,19 +38,20 @@ func get_table_values() -> Array[Array]:
 
 
 ## Get the everything that will be target if table is resized to
-## [param]rows[/parma] and [param]columns[/parma].[br]
-## Helps with undoing & redoing [method set_table_size].
-func get_table_targets(rows: int, columns: int) -> TableTargets:
+## [param x] rows and [param y] columns.[br]
+## [br]
+## [b]Note[/b]: Helps with undoing & redoing [method set_table_size].
+func get_table_targets(x: int, y: int) -> TableTargets:
 	var targets: TableTargets = TableTargets.new()
 	
-	targets.columns = table.row_columns.get_columns_target(columns)
+	targets.columns = table.row_columns.get_columns_target(x)
 	
 	for r in table.get_rows():
 		var array_cells: Array
-		array_cells.assign(r.get_cells_target(columns))
+		array_cells.assign(r.get_cells_target(x))
 		targets.cells.append(array_cells)
 	
-	targets.rows = table.get_rows_target(rows)
+	targets.rows = table.get_rows_target(y)
 	
 	return targets
 
@@ -64,8 +65,13 @@ func recreate_table() -> void:
 	scroll_container.add_child(table)
 
 
-func set_table_size(rows: int, columns: int, using: TableTargets = TableTargets.new()) -> void:
-	table.row_columns.set_columns_quantity(columns, using.columns)
+## Set table size to [param x] columns and [param y] rows.[br]
+## If [param using] is passed, it will attempt to use it nodes when adding to table.[br]
+## [br]
+## [b]Note[/b]: No tests were made to make sure that undo & redo works when resizing
+## both x and y at same time.
+func set_table_size(x: int, y: int, using: TableTargets = TableTargets.new()) -> void:
+	table.row_columns.set_columns_quantity(x, using.columns)
 	table.row_columns.update_columns_label()
 	
 	if using.cells.size() == table.get_rows_count():
@@ -73,12 +79,12 @@ func set_table_size(rows: int, columns: int, using: TableTargets = TableTargets.
 			var r = table.get_row(i)
 			var a: Array[Cell] = []
 			a.assign(using.cells[i])
-			r.set_cells_quantity(columns, a)
+			r.set_cells_quantity(x, a)
 	else:
 		for r in table.get_rows():
-			r.set_cells_quantity(columns)
+			r.set_cells_quantity(x)
 	
-	table.set_rows_quantity(rows, using.rows)
+	table.set_rows_quantity(y, using.rows)
 	table.update_rows_label()
 
 
@@ -90,6 +96,12 @@ class TableTargets:
 	var columns: Array[ColumnHeader] = []
 	var cells: Array[Array] = []
 	var rows: Array[RowCells] = []
+	
+	func is_empty() -> bool:
+		for c in cells:
+			if not c.is_empty():
+				return false
+		return columns.is_empty() and rows.is_empty()
 
 
 ###############################################################

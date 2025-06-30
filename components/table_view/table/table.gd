@@ -123,7 +123,8 @@ func get_rows_count() -> int:
 
 
 ## Get the rows that will be target if quantity change to [param]quantity[/parma].[br]
-## Helps with undoing & redoing [method set_rows_quantity].
+## [br]
+## [b]Note[/b]: Helps with undoing & redoing [method set_rows_quantity].
 func get_rows_target(quantity: int) -> Array[RowCells]:
 	var rows_count: int = get_rows_count()
 	var diff: int = rows_count - quantity

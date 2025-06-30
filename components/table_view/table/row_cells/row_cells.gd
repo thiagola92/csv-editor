@@ -81,7 +81,8 @@ func get_cell_value(index: int) -> String:
 
 
 ## Get the cells that will be target if quantity change to [param]quantity[/parma].[br]
-## Helps with undoing & redoing [method set_cells_quantity].
+## [br]
+## [b]Note[/b]: Helps with undoing & redoing [method set_cells_quantity].
 func get_cells_target(quantity: int) -> Array[Cell]:
 	var cells_count: int = get_cells_count()
 	var diff: int = cells_count - quantity
