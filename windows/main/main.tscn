@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://hvq6ahoo0qlt"]
+[gd_scene load_steps=10 format=3 uid="uid://hvq6ahoo0qlt"]
 
 [ext_resource type="PackedScene" uid="uid://dgu7k4tkq7bt6" path="res://components/top_bar/top_bar.tscn" id="1_f5jsn"]
 [ext_resource type="Script" uid="uid://bp4f8unh25y2r" path="res://windows/main/main.gd" id="1_n4hx8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bvwjtah8xp8lx" path="res://windows/save_dialog/save_dialog.tscn" id="5_t14ra"]
 [ext_resource type="PackedScene" uid="uid://dp8xpaom0oaoe" path="res://windows/overwrite_dialog/overwrite_dialog.tscn" id="7_4xf0a"]
 [ext_resource type="PackedScene" uid="uid://cr22q4bvxhlde" path="res://windows/discard_dialog/discard_dialog.tscn" id="8_jr0yn"]
+[ext_resource type="PackedScene" uid="uid://epx3xmbxatqm" path="res://windows/bigfile_dialog/bigfile_dialog.tscn" id="9_h5scg"]
 [ext_resource type="PackedScene" uid="uid://cykgssytmthxr" path="res://windows/about_window/about_window.tscn" id="9_hsn1q"]
 
 [node name="Main" type="Panel"]
@@ -42,8 +43,9 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="OpenDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("4_plsdc")]
+[node name="OpenDialog" parent="." node_paths=PackedStringArray("table_view", "bigfile_dialog") instance=ExtResource("4_plsdc")]
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
+bigfile_dialog = NodePath("../BigfileDialog")
 
 [node name="SaveDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("5_t14ra")]
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
@@ -52,12 +54,13 @@ table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
 [node name="DiscardDialog" parent="." node_paths=PackedStringArray("table_view") instance=ExtResource("8_jr0yn")]
-auto_translate_mode = 2
 dialog_text = "There is changes not saved.
 Continuing now will discard any changes made until now."
 table_view = NodePath("../MarginContainer/VBoxContainer/TableView")
 
 [node name="AboutWindow" parent="." instance=ExtResource("9_hsn1q")]
+
+[node name="BigfileDialog" parent="." instance=ExtResource("9_h5scg")]
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="about_requested" from="MarginContainer/VBoxContainer/TopBar" to="." method="_on_top_bar_about_requested"]

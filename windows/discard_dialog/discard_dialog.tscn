@@ -9,6 +9,7 @@ title = "Discard CSV"
 initial_position = 4
 size = Vector2i(458, 100)
 auto_translate = false
+ok_button_text = "Continue"
 dialog_text = "Continuing now will discard any changes made until now."
 script = ExtResource("1_h3dcc")
 

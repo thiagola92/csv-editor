@@ -21,6 +21,8 @@ class_name TableView
 extends VBoxContainer
 
 
+const TableScene: PackedScene = preload("res://components/table_view/table/table.tscn")
+
 @onready var scroll_container: ScrollContainer = %ScrollContainer
 
 @onready var table: Table = %Table
@@ -59,7 +61,7 @@ func get_table_targets(x: int, y: int) -> TableTargets:
 func recreate_table() -> void:
 	table.queue_free()
 	
-	table = Table.new()
+	table = TableScene.instantiate()
 	table.table_view = self
 	
 	scroll_container.add_child(table)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://epx3xmbxatqm"]
+
+[ext_resource type="Script" uid="uid://pko3o7u4d6cc" path="res://windows/bigfile_dialog/bigfile_dialog.gd" id="1_wy73e"]
+
+[node name="BigfileDialog" type="ConfirmationDialog"]
+auto_translate_mode = 2
+oversampling_override = 1.0
+title = "Open big file?"
+initial_position = 4
+size = Vector2i(549, 106)
+auto_translate = false
+ok_button_text = "Continue"
+dialog_text = "This editor is not optimize to open CSV with more than 1000 cells.
+It will try to use as much RAM as necessary. Do you wish to continue?"
+script = ExtResource("1_wy73e")
+
+[connection signal="canceled" from="." to="." method="_on_canceled"]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]
