@@ -269,6 +269,17 @@ func _on_empty_header_cut_requested() -> void:
 	_on_empty_header_clear_requested()
 
 
+func _on_empty_header_fit_requested() -> void:
+	for i in get_columns_count():
+		_on_column_header_fit_requested(i)
+	
+	if not table:
+		return
+	
+	for r in table.get_rows():
+		r._on_row_header_fit_requested()
+
+
 func _on_empty_header_paste_requested() -> void:
 	if not table:
 		return

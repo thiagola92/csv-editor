@@ -11,6 +11,7 @@ enum {
 	MENU_CLEAR = 5,
 	MENU_UNDO = 6,
 	MENU_REDO = 7,
+	MENU_FIT = 8,
 }
 
 

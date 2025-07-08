@@ -15,6 +15,9 @@ signal add_row_requested
 
 signal clear_requested
 
+signal fit_requested
+
+
 @onready var empty_menu: EmptyMenu = $EmptyMenu
 
 
@@ -60,3 +63,5 @@ func _on_empty_menu_id_pressed(id: int) -> void:
 			UndoHelper.undo_redo.undo()
 		EmptyMenu.MENU_REDO:
 			UndoHelper.undo_redo.redo()
+		EmptyMenu.MENU_FIT:
+			fit_requested.emit()
