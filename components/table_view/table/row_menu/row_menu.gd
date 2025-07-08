@@ -10,6 +10,7 @@ enum {
 	MENU_ADD_BELOW = 4,
 	MENU_CLEAR = 5,
 	MENU_DELETE = 6,
+	MENU_FIT = 7,
 }
 
 

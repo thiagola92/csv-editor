@@ -34,7 +34,6 @@ control = NodePath("..")
 auto_translate_mode = 2
 visible = false
 unfocusable = false
-auto_translate = false
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="id_pressed" from="RowMenu" to="." method="_on_row_menu_id_pressed"]

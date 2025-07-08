@@ -8,7 +8,7 @@ extends FileDialog
 
 
 func _on_file_selected(path: String) -> void:
-	if FileAccess.get_size(path) > 1000: # 1KB
+	if FileAccess.get_size(path) > 100_000: # 100KB
 		bigfile_dialog.popup_centered()
 		
 		if not await bigfile_dialog.accepted:

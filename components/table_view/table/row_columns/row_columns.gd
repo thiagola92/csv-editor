@@ -58,6 +58,7 @@ func add_column(index: int, column_header: ColumnHeader = null) -> void:
 	column_header.copy_requested.connect(_on_column_header_copy_requested)
 	column_header.cut_requested.connect(_on_column_header_cut_requested)
 	column_header.delete_requested.connect(_on_column_header_delete_requested)
+	column_header.fit_requested.connect(_on_column_header_fit_requested)
 	column_header.paste_requested.connect(_on_column_header_paste_requested)
 	column_header.move_requested.connect(_on_column_header_move_requested)
 	column_header.minimum_size_changed.connect(
@@ -438,6 +439,31 @@ func _on_column_header_delete_requested(index: int) -> void:
 		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
 	
 	UndoHelper.undo_redo.commit_action()
+
+
+func _on_column_header_fit_requested(index: int) -> void:
+	focus_column(index)
+	
+	var column_header: ColumnHeader = get_column(index)
+	
+	column_header.custom_minimum_size.x = 0
+	
+	if not table:
+		return
+	
+	for r in table.get_rows():
+		r.get_cell(index).text_edit.scroll_fit_content_width = true
+	
+	# Safest way because we never know if cells will really change.
+	await get_tree().create_timer(0.1).timeout
+	
+	var biggest: int = 0
+	
+	for r in table.get_rows():
+		biggest = max(biggest, r.get_cell(index).get_minimum_size().x)
+		r.get_cell(index).text_edit.scroll_fit_content_width = false
+	
+	column_header.custom_minimum_size.x = biggest
 
 
 func _on_column_header_paste_requested(index: int) -> void:

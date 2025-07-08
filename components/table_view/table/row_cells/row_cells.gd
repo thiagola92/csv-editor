@@ -16,6 +16,8 @@ const CellScene: PackedScene = preload("../cell/cell.tscn")
 
 @export var table: Table
 
+@onready var row: HBoxContainer = $Row
+
 @onready var row_header: RowHeader = %RowHeader
 
 @onready var cells: HBoxContainer = %Cells
@@ -241,7 +243,6 @@ func _on_row_header_delete_requested() -> void:
 	if not table:
 		return queue_free()
 	
-	
 	var index: int = get_index()
 	
 	table.focus_row(index)
@@ -257,6 +258,41 @@ func _on_row_header_delete_requested() -> void:
 		UndoHelper.undo_redo.add_do_method(table.table_view.refresh_counters)
 		UndoHelper.undo_redo.add_undo_method(table.table_view.refresh_counters)
 	
+	UndoHelper.undo_redo.commit_action()
+
+
+func _on_row_header_fit_requested() -> void:
+	row.custom_minimum_size.y = 0
+	
+	for c in get_cells():
+		c.text_edit.scroll_fit_content_height = true
+	
+	# Safest way because we never know if row will really change.
+	await get_tree().create_timer(0.1).timeout
+	
+	row.custom_minimum_size.y = row.size.y
+	
+	for c in get_cells():
+		c.text_edit.scroll_fit_content_height = false
+
+
+func _on_row_header_move_requested(from: RowHeader) -> void:
+	if not table:
+		return
+	
+	var from_index: int = table.find_row_index(from)
+	
+	if from_index == -1:
+		return
+	
+	var to_index: int = get_index()
+	var min_index: int = min(from_index, to_index)
+	
+	UndoHelper.undo_redo.create_action("Move row")
+	UndoHelper.undo_redo.add_do_method(table.move_row.bind(from_index, to_index))
+	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(min_index))
+	UndoHelper.undo_redo.add_undo_method(table.move_row.bind(to_index, from_index))
+	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(min_index))
 	UndoHelper.undo_redo.commit_action()
 
 
@@ -277,26 +313,6 @@ func _on_row_header_paste_requested() -> void:
 	UndoHelper.undo_redo.create_action("Paste row")
 	UndoHelper.undo_redo.add_do_method(set_cells_values.bind(new_values))
 	UndoHelper.undo_redo.add_undo_method(set_cells_values.bind(values))
-	UndoHelper.undo_redo.commit_action()
-
-
-func _on_row_header_move_requested(from: RowHeader) -> void:
-	if not table:
-		return
-	
-	var from_index: int = table.find_row_index(from)
-	
-	if from_index == -1:
-		return
-	
-	var to_index: int = get_index()
-	var min_index: int = min(from_index, to_index)
-	
-	UndoHelper.undo_redo.create_action("Move row")
-	UndoHelper.undo_redo.add_do_method(table.move_row.bind(from_index, to_index))
-	UndoHelper.undo_redo.add_do_method(table.update_rows_label.bind(min_index))
-	UndoHelper.undo_redo.add_undo_method(table.move_row.bind(to_index, from_index))
-	UndoHelper.undo_redo.add_undo_method(table.update_rows_label.bind(min_index))
 	UndoHelper.undo_redo.commit_action()
 
 

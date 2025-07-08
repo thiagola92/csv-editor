@@ -10,7 +10,7 @@ initial_position = 4
 size = Vector2i(549, 106)
 auto_translate = false
 ok_button_text = "Continue"
-dialog_text = "This editor is not optimize to open CSV with more than 1000 cells.
+dialog_text = "This editor is not optimize to open CSV with more than 1000KB.
 It will try to use as much RAM as necessary. Do you wish to continue?"
 script = ExtResource("1_wy73e")
 

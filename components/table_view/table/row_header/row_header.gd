@@ -17,6 +17,8 @@ signal clear_requested
 
 signal delete_requested
 
+signal fit_requested
+
 signal move_requested(from: RowHeader)
 
 @onready var label: Label = %Label
@@ -81,3 +83,5 @@ func _on_row_menu_id_pressed(id: int) -> void:
 			clear_requested.emit()
 		RowMenu.MENU_DELETE:
 			delete_requested.emit()
+		RowMenu.MENU_FIT:
+			fit_requested.emit()

@@ -17,6 +17,8 @@ signal clear_requested(index: int)
 
 signal delete_requested(index: int)
 
+signal fit_requested(index: int)
+
 signal move_requested(from: int, to: int)
 
 @export var label: Label
@@ -81,3 +83,5 @@ func _on_column_menu_id_pressed(id: int) -> void:
 			clear_requested.emit(get_index())
 		ColumnMenu.MENU_DELETE:
 			delete_requested.emit(get_index())
+		ColumnMenu.MENU_FIT:
+			fit_requested.emit(get_index())

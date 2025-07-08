@@ -34,6 +34,7 @@ control = NodePath("../Row")
 [connection signal="copy_requested" from="Row/RowHeader" to="." method="_on_row_header_copy_requested"]
 [connection signal="cut_requested" from="Row/RowHeader" to="." method="_on_row_header_cut_requested"]
 [connection signal="delete_requested" from="Row/RowHeader" to="." method="_on_row_header_delete_requested"]
+[connection signal="fit_requested" from="Row/RowHeader" to="." method="_on_row_header_fit_requested"]
 [connection signal="minimum_size_changed" from="Row/RowHeader" to="." method="_on_row_header_minimum_size_changed"]
 [connection signal="move_requested" from="Row/RowHeader" to="." method="_on_row_header_move_requested"]
 [connection signal="paste_requested" from="Row/RowHeader" to="." method="_on_row_header_paste_requested"]
