@@ -6,35 +6,48 @@ class_name Cell
 extends HBoxContainer
 
 
+const CellEditScene: PackedScene = preload("../cell_edit/cell_edit.tscn")
+
 const CellWindowScene: PackedScene = preload("../cell_window/cell_window.tscn")
+
+var cell_edit: CellEdit
 
 var cell_window: CellWindow
 
-# Text to be registered in UndoRedo when leaving focus.
-var previous_text: String
-
-@onready var text_edit: TextEdit = $TextEdit
+@onready var label: RichTextLabel = $Label
 
 @onready var column_separator: ColumnSeparator = $ColumnSeparator
 
 
 func _ready() -> void:
-	CellHelper.setup_menu(text_edit.get_menu())
-	CellHelper.setup_text_edit(text_edit)
-	
-	text_edit.get_menu().id_pressed.connect(_on_id_pressed)
+	CellHelper.setup_rich_text_label(label)
 
 
-func clear() -> void:
-	# Release focus to avoid trigerring UndoRedo.
-	text_edit.release_focus()
-	text_edit.clear()
+func focus_editor() -> void:
+	label.hide()
 	
 	if cell_window:
-		cell_window.text_edit.text = text_edit.text
+		return focus_window()
+	
+	if cell_edit:
+		return cell_edit.grab_focus()
+	
+	cell_edit = CellEditScene.instantiate()
+	cell_edit.cell = self
+	
+	add_child(cell_edit)
+	move_child(cell_edit, 0)
+	
+	cell_edit.window_requested.connect(focus_window)
+	cell_edit.tree_exiting.connect(label.show)
 
 
 func focus_window() -> void:
+	label.show()
+	
+	if cell_edit:
+		cell_edit.release_focus()
+	
 	if cell_window:
 		return cell_window.grab_focus()
 	
@@ -45,19 +58,17 @@ func focus_window() -> void:
 
 
 func get_text() -> String:
-	return text_edit.text
-
-
-func reset_scroll() -> void:
-	text_edit.get_v_scroll_bar().value = 0
-	text_edit.get_h_scroll_bar().value = 0
+	return label.text
 
 
 func set_text(text: String) -> void:
-	text_edit.text = text
+	label.text = text
+	
+	if cell_edit:
+		cell_edit.text = label.text
 	
 	if cell_window:
-		cell_window.text_edit.text = text_edit.text
+		cell_window.text_edit.text = label.text
 
 
 ## Set the [member ColumnSeparator.control] for this cell.
@@ -66,55 +77,57 @@ func set_control(control: Control) -> void:
 	column_separator.control = control
 
 
-func _on_id_pressed(id: int) -> void:
-	match id:
-		CellHelper.MENU_WINDOW:
-			focus_window()
-
-
-func _on_text_edit_focus_exited() -> void:
-	reset_scroll()
-	text_edit.clear_undo_history()
-	
-	text_edit.editable = false
-	text_edit.shortcut_keys_enabled = false
-	
-	if text_edit.text == previous_text:
-		return
-	
-	if cell_window:
-		return
-	
-	UndoHelper.undo_redo.create_action("Change cell")
-	UndoHelper.undo_redo.add_do_property(text_edit, "text", text_edit.text)
-	UndoHelper.undo_redo.add_undo_property(text_edit, "text", previous_text)
-	UndoHelper.undo_redo.commit_action(false)
-
-
-func _on_text_edit_gui_input(event: InputEvent) -> void:
+func _on_label_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		_on_text_edit_gui_mouse_button(event)
+		_on_label_gui_mouse_button(event)
 	elif event is InputEventKey:
-		_on_text_edit_gui_key(event)
+		_on_label_gui_key(event)
 
 
-func _on_text_edit_gui_mouse_button(event: InputEventMouseButton) -> void:
+func _on_label_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
-		_on_text_edit_gui_mouse_double_click(event)
+		_on_label_gui_mouse_double_click(event)
+	if event.button_index == MOUSE_BUTTON_RIGHT:
+		_on_label_gui_mouse_right_click(event)
 
 
-func _on_text_edit_gui_mouse_double_click(_event: InputEventMouseButton) -> void:
+func _on_label_gui_mouse_double_click(_event: InputEventMouseButton) -> void:
 	if cell_window:
-		cell_window.grab_focus()
-		return
+		return focus_window()
 	
-	text_edit.editable = true
-	text_edit.caret_blink = true
-	text_edit.shortcut_keys_enabled = true
-	previous_text = text_edit.text
+	focus_editor()
 
 
-func _on_text_edit_gui_key(_event: InputEventKey) -> void:
-	if text_edit.editable:
+func _on_label_gui_mouse_right_click(_event: InputEventMouseButton) -> void:
+	focus_editor()
+	
+	if cell_edit:
+		cell_edit.get_menu().popup(
+			Rect2i(
+				get_window().position + (get_global_mouse_position() as Vector2i),
+				Vector2i.ZERO
+			)
+		)
+
+
+func _on_label_gui_key(event: InputEventKey) -> void:
+	if cell_window:
+		return focus_window()
+	
+	# NOTE: Nothing here will block CellEdit from receiving inputs once it popups.
+	# We are just preventing it from popup when it shouldn't.
+	if event.is_released() or event.is_echo():
 		return
 	
+	# TODO: If is pressing ctrl/alt/meta/... we may have to trigger shortcuts instead.
+	if (event.ctrl_pressed or
+		event.alt_pressed or
+		event.meta_pressed or
+		event.shift_pressed or
+		event.keycode == KEY_CTRL or
+		event.keycode == KEY_ALT or
+		event.keycode == KEY_META or
+		event.keycode == KEY_SHIFT):
+		return
+	
+	focus_editor()

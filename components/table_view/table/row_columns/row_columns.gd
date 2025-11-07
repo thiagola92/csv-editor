@@ -463,7 +463,7 @@ func _on_column_header_fit_requested(index: int) -> void:
 		return
 	
 	for r in table.get_rows():
-		r.get_cell(index).text_edit.scroll_fit_content_width = true
+		r.get_cell(index).label.fit_content = true
 	
 	# Safest way because we never know if cells will really change.
 	await get_tree().create_timer(0.1).timeout
@@ -472,7 +472,7 @@ func _on_column_header_fit_requested(index: int) -> void:
 	
 	for r in table.get_rows():
 		biggest = max(biggest, r.get_cell(index).get_minimum_size().x)
-		r.get_cell(index).text_edit.scroll_fit_content_width = false
+		r.get_cell(index).label.fit_content = false
 	
 	column_header.custom_minimum_size.x = biggest
 

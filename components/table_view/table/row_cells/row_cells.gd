@@ -147,12 +147,12 @@ func set_cells_values(values: Array[String]) -> void:
 
 
 func clear_cell(index: int) -> void:
-	get_cell(index).clear()
+	get_cell(index).set_text("")
 
 
 func clear_cells() -> void:
 	for c in get_cells():
-		c.clear()
+		c.set_text("")
 
 
 ###############################################################
@@ -265,7 +265,7 @@ func _on_row_header_fit_requested() -> void:
 	row.custom_minimum_size.y = 0
 	
 	for c in get_cells():
-		c.text_edit.scroll_fit_content_height = true
+		c.label.fit_content = true
 	
 	# Safest way because we never know if row will really change.
 	await get_tree().create_timer(0.1).timeout
@@ -273,7 +273,7 @@ func _on_row_header_fit_requested() -> void:
 	row.custom_minimum_size.y = row.size.y
 	
 	for c in get_cells():
-		c.text_edit.scroll_fit_content_height = false
+		c.label.fit_content = false
 
 
 func _on_row_header_move_requested(from: RowHeader) -> void:

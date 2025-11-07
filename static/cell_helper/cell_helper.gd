@@ -22,6 +22,8 @@ const ICON_WINDOW := preload("./ActionWindow.svg")
 
 const MENU_WINDOW = TextEdit.MENU_MAX + 1
 
+static var empty_style: StyleBoxEmpty = StyleBoxEmpty.new()
+
 
 static func setup_menu(menu: PopupMenu, is_window: bool = false) -> void:
 	# Remove items that should be UndoRedo to all cells.
@@ -45,14 +47,22 @@ static func setup_menu(menu: PopupMenu, is_window: bool = false) -> void:
 
 static func setup_text_edit(text_edit: TextEdit) -> void:
 	# Hide scroll grabber.
-	text_edit.get_v_scroll_bar().add_theme_stylebox_override("scroll", StyleBoxEmpty.new())
-	text_edit.get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", StyleBoxEmpty.new())
-	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber", StyleBoxEmpty.new())
-	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber_highlight", StyleBoxEmpty.new())
-	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber_pressed", StyleBoxEmpty.new())
-	text_edit.get_h_scroll_bar().add_theme_stylebox_override("scroll", StyleBoxEmpty.new())
-	text_edit.get_h_scroll_bar().add_theme_stylebox_override("scroll_focus", StyleBoxEmpty.new())
-	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber", StyleBoxEmpty.new())
-	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_highlight", StyleBoxEmpty.new())
-	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_pressed", StyleBoxEmpty.new())
-	pass
+	text_edit.get_v_scroll_bar().add_theme_stylebox_override("scroll", empty_style)
+	text_edit.get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", empty_style)
+	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber", empty_style)
+	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber_highlight", empty_style)
+	text_edit.get_v_scroll_bar().add_theme_stylebox_override("grabber_pressed", empty_style)
+	text_edit.get_h_scroll_bar().add_theme_stylebox_override("scroll", empty_style)
+	text_edit.get_h_scroll_bar().add_theme_stylebox_override("scroll_focus", empty_style)
+	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber", empty_style)
+	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_highlight", empty_style)
+	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_pressed", empty_style)
+
+
+static func setup_rich_text_label(rich_text_label: RichTextLabel) -> void:
+	# Hide scroll grabber.
+	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("scroll", empty_style)
+	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", empty_style)
+	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber", empty_style)
+	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber_highlight", empty_style)
+	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber_pressed", empty_style)

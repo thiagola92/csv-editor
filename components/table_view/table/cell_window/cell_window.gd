@@ -14,11 +14,10 @@ func _ready() -> void:
 	CellHelper.setup_menu(text_edit.get_menu(), true)
 	
 	if cell:
-		cell.text_edit.editable = false
 		text_edit.text = cell.get_text()
 		undo_text = text_edit.text
-		
-		cell.tree_exiting.connect(func(): cell = null)
+	
+	text_edit.grab_focus()
 
 
 func _on_close_requested() -> void:
@@ -35,8 +34,8 @@ func _on_tree_exiting() -> void:
 		return
 	
 	UndoHelper.undo_redo.create_action("Change cell through window")
-	UndoHelper.undo_redo.add_do_property(cell.text_edit, "text", text_edit.text)
-	UndoHelper.undo_redo.add_undo_property(cell.text_edit, "text", undo_text)
+	UndoHelper.undo_redo.add_do_property(cell.label, "text", text_edit.text)
+	UndoHelper.undo_redo.add_undo_property(cell.label, "text", undo_text)
 	UndoHelper.undo_redo.commit_action(false)
 
 
@@ -44,4 +43,4 @@ func _on_text_edit_text_changed() -> void:
 	if not cell:
 		return
 	
-	cell.text_edit.text = text_edit.text
+	cell.label.text = text_edit.text
