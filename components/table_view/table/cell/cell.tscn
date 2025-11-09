@@ -18,8 +18,8 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="ClipContainer"]
 layout_mode = 1
-offset_right = 1140.0
-offset_bottom = 648.0
+offset_right = 1.0
+offset_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2

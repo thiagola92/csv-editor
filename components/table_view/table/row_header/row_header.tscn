@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv1t0ng7bnulq"]
+[gd_scene load_steps=3 format=3 uid="uid://bv1t0ng7bnulq"]
 
 [ext_resource type="Script" uid="uid://bde1us8ilog54" path="res://components/table_view/table/row_header/row_header.gd" id="1_20rcx"]
 [ext_resource type="PackedScene" uid="uid://bk2g2d2b07n18" path="res://components/table_view/table/column_separator/column_separator.tscn" id="2_nn16a"]
-[ext_resource type="PackedScene" uid="uid://c1gqy602so5fd" path="res://components/table_view/table/row_menu/row_menu.tscn" id="3_xtn7s"]
 
 [node name="RowHeader" type="HBoxContainer" node_paths=PackedStringArray("shortcut_context")]
 offset_right = 72.0
@@ -30,10 +29,4 @@ vertical_alignment = 1
 layout_mode = 2
 control = NodePath("..")
 
-[node name="RowMenu" parent="." instance=ExtResource("3_xtn7s")]
-auto_translate_mode = 2
-visible = false
-unfocusable = false
-
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="id_pressed" from="RowMenu" to="." method="_on_row_menu_id_pressed"]

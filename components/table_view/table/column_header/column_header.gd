@@ -21,9 +21,9 @@ signal fit_requested(index: int)
 
 signal move_requested(from: int, to: int)
 
-@export var label: Label
+const ColumnMenuScene: PackedScene = preload("res://components/table_view/table/column_menu/column_menu.tscn")
 
-@onready var column_menu: ColumnMenu = $ColumnMenu
+@export var label: Label
 
 
 func _shortcut_input(event: InputEvent) -> void:
@@ -59,6 +59,11 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_RIGHT:
+		var column_menu: ColumnMenu = ColumnMenuScene.instantiate()
+		
+		add_child(column_menu)
+		
+		column_menu.id_pressed.connect(_on_column_menu_id_pressed)
 		column_menu.popup(
 			Rect2i(
 				get_window().position + (get_global_mouse_position() as Vector2i),

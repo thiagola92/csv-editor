@@ -262,18 +262,17 @@ func _on_row_header_delete_requested() -> void:
 
 
 func _on_row_header_fit_requested() -> void:
+	if table:
+		table.focus_row(get_index())
+	
 	row.custom_minimum_size.y = 0
 	
-	for c in get_cells():
-		c.label.fit_content = true
-	
-	# Safest way because we never know if row will really change.
-	await get_tree().create_timer(0.1).timeout
-	
-	row.custom_minimum_size.y = row.size.y
+	var biggest: int = 0
 	
 	for c in get_cells():
-		c.label.fit_content = false
+		biggest = max(biggest, c.get_fit_size().y)
+	
+	row.custom_minimum_size.y = biggest
 
 
 func _on_row_header_move_requested(from: RowHeader) -> void:

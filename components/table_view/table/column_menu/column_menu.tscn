@@ -10,11 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://cj1cu1xgdsfdp" path="res://components/table_view/table/column_menu/ActionFitWidth.svg" id="7_j3lr5"]
 
 [node name="ColumnMenu" type="PopupMenu"]
+auto_translate_mode = 2
 oversampling_override = 1.0
 size = Vector2i(187, 232)
 visible = true
 unfocusable = true
-auto_translate = false
 item_count = 10
 item_0/text = "Cut"
 item_0/icon = ExtResource("1_egiwo")
@@ -45,3 +45,5 @@ item_9/text = "Fit data"
 item_9/icon = ExtResource("7_j3lr5")
 item_9/id = 7
 script = ExtResource("1_ibrhn")
+
+[connection signal="popup_hide" from="." to="." method="_on_popup_hide"]

@@ -67,6 +67,14 @@ func get_text() -> String:
 	return label.text
 
 
+func get_fit_size() -> Vector2:
+	var separation: float = get_theme_constant("separation")
+	var width: float = label.size.x + column_separator.size.x + separation
+	var height: float = label.size.y
+	
+	return Vector2(width, height)
+
+
 func set_text(text: String) -> void:
 	label.text = text
 	

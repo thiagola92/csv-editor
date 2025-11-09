@@ -22,3 +22,7 @@ func _ready() -> void:
 	MenuHelper.add_shortcut(self, MENU_CUT, "input/ui_cut")
 	MenuHelper.add_shortcut(self, MENU_COPY, "input/ui_copy")
 	MenuHelper.add_shortcut(self, MENU_PASTE, "input/ui_paste")
+
+
+func _on_popup_hide() -> void:
+	queue_free()

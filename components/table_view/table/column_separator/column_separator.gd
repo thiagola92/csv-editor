@@ -24,19 +24,17 @@ func _process(_delta: float) -> void:
 
 func resize_column() -> void:
 	var distance: float = get_global_mouse_position().x - initial_x_position
-	
-	if control:
-		control.custom_minimum_size.x = initial_x_size + distance
-		
-		await control.item_rect_changed
-		control.minimum_size_changed.emit()
+	set_column_size(initial_x_size + distance)
 
 
 func reset_column() -> void:
 	set_process(false)
-	
+	set_column_size(0)
+
+
+func set_column_size(x: float) -> void:
 	if control:
-		control.custom_minimum_size.x = 0
+		control.custom_minimum_size.x = x
 		
 		await control.item_rect_changed
 		control.minimum_size_changed.emit()

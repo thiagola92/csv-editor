@@ -462,17 +462,10 @@ func _on_column_header_fit_requested(index: int) -> void:
 	if not table:
 		return
 	
-	for r in table.get_rows():
-		r.get_cell(index).label.fit_content = true
-	
-	# Safest way because we never know if cells will really change.
-	await get_tree().create_timer(0.1).timeout
-	
 	var biggest: int = 0
 	
 	for r in table.get_rows():
-		biggest = max(biggest, r.get_cell(index).get_minimum_size().x)
-		r.get_cell(index).label.fit_content = false
+		biggest = max(biggest, r.get_cell(index).get_fit_size().x)
 	
 	column_header.custom_minimum_size.x = biggest
 

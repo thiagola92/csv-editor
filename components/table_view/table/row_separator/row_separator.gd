@@ -24,19 +24,17 @@ func _process(_delta: float) -> void:
 
 func resize_row() -> void:
 	var distance: float = get_global_mouse_position().y - initial_y_position
-	
-	if control:
-		control.custom_minimum_size.y = initial_y_size + distance
-		
-		await control.item_rect_changed
-		control.minimum_size_changed.emit()
+	set_row_height(initial_y_size + distance)
 
 
 func reset_row() -> void:
 	set_process(false)
-	
+	set_row_height(0)
+
+
+func set_row_height(y: float) -> void:
 	if control:
-		control.custom_minimum_size.y = 0
+		control.custom_minimum_size.y = y
 		
 		await control.item_rect_changed
 		control.minimum_size_changed.emit()

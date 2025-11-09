@@ -21,9 +21,9 @@ signal fit_requested
 
 signal move_requested(from: RowHeader)
 
-@onready var label: Label = %Label
+const RowMenuScene: PackedScene = preload("res://components/table_view/table/row_menu/row_menu.tscn")
 
-@onready var row_menu: RowMenu = $RowMenu
+@onready var label: Label = %Label
 
 
 func _shortcut_input(event: InputEvent) -> void:
@@ -59,6 +59,11 @@ func _on_gui_input(event: InputEvent) -> void:
 
 func _on_gui_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_RIGHT:
+		var row_menu: RowMenu = RowMenuScene.instantiate()
+		
+		add_child(row_menu)
+		
+		row_menu.id_pressed.connect(_on_row_menu_id_pressed)
 		row_menu.popup(
 			Rect2i(
 				get_window().position + (get_global_mouse_position() as Vector2i),
