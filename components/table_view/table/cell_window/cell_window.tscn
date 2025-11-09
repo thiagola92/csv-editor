@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dda325pd61kmi" path="res://components/table_view/table/cell_window/cell_window.gd" id="1_kibe3"]
 
-[node name="CellWindow" type="Window"]
+[node name="CellWindow" type="Window" node_paths=PackedStringArray("text_edit")]
 oversampling_override = 1.0
 initial_position = 5
 size = Vector2i(500, 500)
 script = ExtResource("1_kibe3")
+text_edit = NodePath("TextEdit")
 
 [node name="TextEdit" type="TextEdit" parent="."]
 anchors_preset = 15
@@ -16,5 +17,4 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
-[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="text_changed" from="TextEdit" to="." method="_on_text_edit_text_changed"]
