@@ -17,13 +17,11 @@ var cell_window: CellWindow
 ## Text to be registered in UndoRedo when finish editing.
 var undo_text: String
 
-@onready var label: RichTextLabel = $Label
+@onready var clip_container: Control = $ClipContainer
+
+@onready var label: Label = $ClipContainer/Label
 
 @onready var column_separator: ColumnSeparator = $ColumnSeparator
-
-
-func _ready() -> void:
-	CellHelper.setup_rich_text_label(label)
 
 
 func focus_editor() -> void:
@@ -39,8 +37,7 @@ func focus_editor() -> void:
 	cell_edit = CellEditScene.instantiate()
 	cell_edit.text = label.text
 	
-	add_child(cell_edit)
-	move_child(cell_edit, 0)
+	clip_container.add_child(cell_edit)
 	
 	cell_edit.window_requested.connect(focus_window)
 	cell_edit.text_changed.connect(_on_cell_edit_text_changed)
@@ -60,7 +57,7 @@ func focus_window() -> void:
 	cell_window = CellWindowScene.instantiate()
 	cell_window.text_edit.text = label.text
 	
-	add_child(cell_window)
+	clip_container.add_child(cell_window)
 	
 	cell_window.text_changed.connect(_on_cell_window_text_changed)
 	cell_window.tree_exiting.connect(_on_cell_window_tree_exiting)

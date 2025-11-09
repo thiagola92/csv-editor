@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cewco4f4r603g"]
+[gd_scene load_steps=4 format=3 uid="uid://cewco4f4r603g"]
 
 [ext_resource type="Script" uid="uid://c8pgcxs5kul7o" path="res://components/table_view/table/cell/cell.gd" id="1_ox40q"]
+[ext_resource type="PackedScene" uid="uid://ccise3r4njtko" path="res://components/table_view/table/clip_container/clip_container.tscn" id="2_ffuaq"]
 [ext_resource type="PackedScene" uid="uid://bk2g2d2b07n18" path="res://components/table_view/table/column_separator/column_separator.tscn" id="2_udf6q"]
 
 [node name="Cell" type="HBoxContainer"]
@@ -11,13 +12,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ox40q")
 
-[node name="Label" type="RichTextLabel" parent="."]
+[node name="ClipContainer" parent="." instance=ExtResource("2_ffuaq")]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ClipContainer"]
+layout_mode = 1
+offset_right = 1140.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 2
-autowrap_mode = 0
+mouse_filter = 0
 
 [node name="ColumnSeparator" parent="." instance=ExtResource("2_udf6q")]
 layout_mode = 2
 
-[connection signal="gui_input" from="Label" to="." method="_on_label_gui_input"]
+[connection signal="gui_input" from="ClipContainer/Label" to="." method="_on_label_gui_input"]

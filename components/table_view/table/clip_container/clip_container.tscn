@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccise3r4njtko"]
+
+[ext_resource type="Script" uid="uid://cbk7vloorcrc1" path="res://components/table_view/table/clip_container/clip_container.gd" id="1_g76ql"]
+
+[node name="ClipContainer" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g76ql")
+
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]

@@ -57,12 +57,3 @@ static func setup_text_edit(text_edit: TextEdit) -> void:
 	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber", empty_style)
 	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_highlight", empty_style)
 	text_edit.get_h_scroll_bar().add_theme_stylebox_override("grabber_pressed", empty_style)
-
-
-static func setup_rich_text_label(rich_text_label: RichTextLabel) -> void:
-	# Hide scroll grabber.
-	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("scroll", empty_style)
-	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("scroll_focus", empty_style)
-	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber", empty_style)
-	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber_highlight", empty_style)
-	rich_text_label.get_v_scroll_bar().add_theme_stylebox_override("grabber_pressed", empty_style)
